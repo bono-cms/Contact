@@ -69,6 +69,23 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
 	}
 
 	/**
+	 * Updates order values by associated ids
+	 * 
+	 * @param array $orders
+	 * @return boolean
+	 */
+	public function updateOrders(array $orders)
+	{
+		foreach ($orders as $id => $order) {
+			if (!$this->contactMapper->updateOrderById($id, $order)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Returns last contact's id
 	 * 
 	 * @return integer
