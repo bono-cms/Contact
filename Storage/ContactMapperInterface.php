@@ -14,6 +14,15 @@ namespace Contact\Storage;
 interface ContactMapperInterface
 {
 	/**
+	 * Updates contact's sort order
+	 * 
+	 * @param string $id Contact id
+	 * @param integer $order New order
+	 * @return boolean
+	 */
+	public function updateOrderById($id, $order);
+
+	/**
 	 * Fetches contact name by its associated id
 	 * 
 	 * @param string $id Contact id
