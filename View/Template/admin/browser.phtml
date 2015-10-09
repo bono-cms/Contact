@@ -52,7 +52,9 @@ use Krystal\Form\HtmlHelper;
 					</td>
 					<td class="text-center text-muted"><?php echo $contact->getId(); ?></td>
 					<td class="text-center"><?php echo $contact->getName(); ?></td>
-					<td class="text-center"><?php echo $contact->getOrder(); ?></td>
+					<td class="text-center">
+						<input type="number" class="form-control" min="0" name="order[<?php echo $contact->getId(); ?>]" value="<?php echo $contact->getOrder(); ?>" />
+					</td>
 					<td class="text-center">
 						<input type="radio" name="default" value="<?php echo $contact->getId(); ?>" <?php HtmlHelper::checkOnDemand($contact->getDefault()); ?>/>
 					</td>

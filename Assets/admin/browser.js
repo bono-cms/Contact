@@ -33,8 +33,8 @@ $(function() {
 			url		: "/admin/module/contact/save.ajax",
 			data	: $("form").serialize(),
 			success : function(response) {
-				if (response != "1") {
-					console.log(response);
+				if (response == "1") {
+					window.location.reload();
 				} else {
 					$.showErrors(response);
 				}
