@@ -1,0 +1,91 @@
+<?php
+
+use Krystal\Form\HtmlHelper;
+
+?>
+<form>
+	<div class="well clearfix">
+		<input type="hidden" name="id" value="<?php echo $contact->getId(); ?>" />
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="name" class="form-control" value="<?php echo $contact->getName(); ?>" placeholder="<?php $this->show('Name'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="email" class="form-control" value="<?php echo $contact->getEmail(); ?>" placeholder="<?php $this->show('Email'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Phone'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<input type="text" name="phone" class="form-control" value="<?php echo $contact->getPhone(); ?>" placeholder="<?php $this->show('Phone'); ?>" />
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="form-group clearfix">
+			<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+			<div class="col-lg-10">
+				<div class="input-group">
+					<textarea name="description" class="form-control" value="<?php echo $contact->getDescription(); ?>" placeholder="<?php $this->show('Description'); ?>"></textarea>
+					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+				</div>
+			</div>
+		</div>
+		
+		<div class="options">
+			<div class="form-group clearfix">
+				<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
+				<div class="col-lg-10">				
+					<input type="hidden" name="makeDefault" value="0" />
+					<input type="checkbox" name="makeDefault" value="1" class="form-control" <?php HtmlHelper::checkOnDemand($contact->getDefault()); ?> />
+				</div>
+			</div>
+			
+			<div class="form-group clearfix">
+				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+				<div class="col-lg-10">
+					<input type="hidden" name="published" value="0" />
+					<input type="checkbox" name="published" value="1" class="form-control" <?php HtmlHelper::checkOnDemand($contact->getPublished()); ?> />
+				</div>
+			</div>
+			
+			<div class="form-group clearfix">
+				<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+				<div class="col-lg-10">
+					<input type="number" min="0" class="form-control" name="order" value="<?php echo $contact->getOrder(); ?>" placeholder="<?php $this->show('Sort order'); ?>" />
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<?php if (!$contact->getId()): ?>
+	
+	<button data-button="add" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
+	<button data-button="add-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
+	
+	<?php else: ?>
+	
+	<button data-button="save" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
+	<button data-button="save-create" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
+	
+	<?php endif; ?>
+	
+	<button data-button="options" class="btn btn-primary"><i class="glyphicon glyphicon-open"></i> <?php $this->show('More options'); ?></button>
+	<button data-button="cancel" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
+	
+</form>
