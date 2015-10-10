@@ -82,6 +82,8 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
 		return $this->db->select('*')
 						->from(self::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
+						->orderBy('id')
+						->desc()
 						->paginate($page, $itemsPerPage)
 						->queryAll();
 	}
