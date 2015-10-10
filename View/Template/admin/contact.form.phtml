@@ -5,13 +5,13 @@ use Krystal\Form\HtmlHelper;
 ?>
 <form>
 	<div class="well clearfix">
-		<input type="hidden" name="id" value="<?php echo $contact->getId(); ?>" />
+		<input type="hidden" name="contact[id]" value="<?php echo $contact->getId(); ?>" />
 		
 		<div class="form-group clearfix">
 			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="name" class="form-control" value="<?php echo $contact->getName(); ?>" placeholder="<?php $this->show('Name'); ?>" />
+					<input type="text" name="contact[name]" class="form-control" value="<?php echo $contact->getName(); ?>" placeholder="<?php $this->show('Name'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -21,7 +21,7 @@ use Krystal\Form\HtmlHelper;
 			<label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="email" class="form-control" value="<?php echo $contact->getEmail(); ?>" placeholder="<?php $this->show('Email'); ?>" />
+					<input type="text" name="contact[email]" class="form-control" value="<?php echo $contact->getEmail(); ?>" placeholder="<?php $this->show('Email'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -31,7 +31,7 @@ use Krystal\Form\HtmlHelper;
 			<label class="col-lg-2 control-label"><?php $this->show('Phone'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<input type="text" name="phone" class="form-control" value="<?php echo $contact->getPhone(); ?>" placeholder="<?php $this->show('Phone'); ?>" />
+					<input type="text" name="contact[phone]" class="form-control" value="<?php echo $contact->getPhone(); ?>" placeholder="<?php $this->show('Phone'); ?>" />
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -41,7 +41,7 @@ use Krystal\Form\HtmlHelper;
 			<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
 			<div class="col-lg-10">
 				<div class="input-group">
-					<textarea name="description" class="form-control" value="<?php echo $contact->getDescription(); ?>" placeholder="<?php $this->show('Description'); ?>"></textarea>
+					<textarea name="contact[description]" class="form-control" value="<?php echo $contact->getDescription(); ?>" placeholder="<?php $this->show('Description'); ?>"></textarea>
 					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
 				</div>
 			</div>
@@ -51,23 +51,23 @@ use Krystal\Form\HtmlHelper;
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
 				<div class="col-lg-10">				
-					<input type="hidden" name="makeDefault" value="0" />
-					<input type="checkbox" name="makeDefault" value="1" class="form-control" <?php HtmlHelper::checkOnDemand($contact->getDefault()); ?> />
+					<input type="hidden" name="contact[makeDefault]" value="0" />
+					<input type="checkbox" name="contact[makeDefault]" value="1" class="form-control" <?php HtmlHelper::checkOnDemand($contact->getDefault()); ?> />
 				</div>
 			</div>
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
 				<div class="col-lg-10">
-					<input type="hidden" name="published" value="0" />
-					<input type="checkbox" name="published" value="1" class="form-control" <?php HtmlHelper::checkOnDemand($contact->getPublished()); ?> />
+					<input type="hidden" name="contact[published]" value="0" />
+					<input type="checkbox" name="contact[published]" value="1" class="form-control" <?php HtmlHelper::checkOnDemand($contact->getPublished()); ?> />
 				</div>
 			</div>
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
 				<div class="col-lg-10">
-					<input type="number" min="0" class="form-control" name="order" value="<?php echo $contact->getOrder(); ?>" placeholder="<?php $this->show('Sort order'); ?>" />
+					<input type="number" min="0" class="form-control" name="contact[order]" value="<?php echo $contact->getOrder(); ?>" placeholder="<?php $this->show('Sort order'); ?>" />
 				</div>
 			</div>
 		</div>

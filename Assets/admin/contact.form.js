@@ -1,5 +1,7 @@
 
 $(function() {
+
+	$.setFormGroup('contact');
 	
 	function add(callback){
 		$("form").send({
