@@ -69,6 +69,23 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
 	}
 
 	/**
+	 * Updates published state by their associated ids
+	 * 
+	 * @param array $pair
+	 * @return boolean
+	 */
+	public function updatePublished(array $pair)
+	{
+		foreach ($pair as $id => $published) {
+			if (!$this->contactMapper->updatePublishedById($id, $published)) {
+				return false;
+			}
+		}
+
+		return true;
+	}
+
+	/**
 	 * Updates order values by associated ids
 	 * 
 	 * @param array $orders
