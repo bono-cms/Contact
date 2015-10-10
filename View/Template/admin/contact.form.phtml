@@ -48,6 +48,9 @@ use Krystal\Form\HtmlHelper;
 		</div>
 		
 		<div class="options">
+			
+			<?php if (!$contact->getId()): ?>
+
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
 				<div class="col-lg-10">				
@@ -55,6 +58,8 @@ use Krystal\Form\HtmlHelper;
 					<input type="checkbox" name="contact[makeDefault]" value="1" class="form-control" <?php HtmlHelper::checkOnDemand($contact->getDefault()); ?> />
 				</div>
 			</div>
+
+			<?php endif; ?>
 			
 			<div class="form-group clearfix">
 				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
