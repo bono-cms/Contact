@@ -16,6 +16,7 @@ use Cms\Service\HistoryManagerInterface;
 use Contact\Storage\ContactMapperInterface;
 use Contact\Storage\DefaultMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
+use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
 
 final class ContactManager extends AbstractManager implements ContactManagerInterface
@@ -223,7 +224,7 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
 	public function add(array $input)
 	{
 		$this->track('Contact "%s" has been added', $input['name']);
-		return $this->contactMapper->insert($input);
+		return $this->contactMapper->insert(ArrayUtils::arrayWithout($input, array('makeDefault')));
 	}
 
 	/**
