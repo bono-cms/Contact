@@ -114,7 +114,7 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
 	 * @param array $input Raw input data
 	 * @return boolean
 	 */
-	public function update(array $data)
+	public function update(array $input)
 	{
 		return $this->persist($this->getWithLang($input));
 	}
