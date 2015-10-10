@@ -115,17 +115,16 @@ final class Browser extends AbstractController
 	{
 		if ($this->request->hasPost('toDelete')) {
 
-			//TODO
-			$flashKey = 'success';
-			$flashMessage = 'Selected contacts have been removed successfully';
+			$ids = array_keys($this->request->getPost('toDelete'));
 
+			$contactManager = $this->getContactManager();
+			$contactManager->deleteByIds($ids);
+
+			$this->flashBag->set('success', 'Selected contacts have been removed successfully');
 		} else {
-
-			$flashKey = 'warning';
-			$flashMessage = 'You should select at least on contact to remove';
+			$this->flashBag->set('warning', 'You should select at least one contact to remove');
 		}
 
-		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 }
