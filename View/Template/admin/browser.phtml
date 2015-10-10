@@ -64,8 +64,8 @@ use Krystal\Form\Widget\CheckBoxWidget;
 						<input type="radio" name="default" value="<?php echo $contact->getId(); ?>" <?php HtmlHelper::checkOnDemand($contact->getDefault()); ?>/>
 					</td>
 					<td class="text-center">
-						<a data-button="edit" href="<?php echo $this->url('Contact:Admin:Edit@indexAction', $contact->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-						<a data-button="delete" href="#" data-id="<?php echo $contact->getId(); ?>" data-category="main"><i class="glyphicon glyphicon-remove"></i></a>
+						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this contact'); ?>" data-button="edit" href="<?php echo $this->url('Contact:Admin:Edit@indexAction', $contact->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
+						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this contact'); ?>" data-button="delete" href="#" data-id="<?php echo $contact->getId(); ?>" data-category="main"><i class="glyphicon glyphicon-remove"></i></a>
 					</td>
 				</tr>
 				<?php endforeach; ?>
