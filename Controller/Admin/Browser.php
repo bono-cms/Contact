@@ -29,7 +29,7 @@ final class Browser extends AbstractController
 		$contacts = $contactManager->fetchAllByPage($page, $this->getSharedPerPageCount());
 
 		$paginator = $contactManager->getPaginator();
-		$paginator->setUrl('#'); //@TODO this
+		$paginator->setUrl('/admin/module/contact/page/(:var)');
 
 		return $this->view->render('browser', array(
 			'title' => 'Contacts',

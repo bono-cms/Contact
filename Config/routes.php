@@ -30,6 +30,10 @@ return array(
 		'controller' => 'Admin:Browser@indexAction'
 	),
 	
+	'/admin/module/contact/page/(:var)' => array(
+		'controller'	=> 'Admin:Browser@indexAction'
+	),
+	
 	'/admin/module/contact/add' => array(
 		'controller' => 'Admin:Add@indexAction'
 	),
