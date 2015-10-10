@@ -70,7 +70,7 @@ interface ContactManagerInterface
 	/**
 	 * Adds a contact
 	 * 
-	 * @param array $input Raw form data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function add(array $input);
@@ -78,7 +78,7 @@ interface ContactManagerInterface
 	/**
 	 * Updates a contact
 	 * 
-	 * @param array $form Raw form data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function update(array $input);
