@@ -8,11 +8,10 @@ use Krystal\Form\Widget\CheckBoxWidget;
 <div class="btn-toolbar">
 	<div class="btn-group">
 	  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> 
-		<span class="caret"></span>
+		<i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
 	  </button>
 	  <ul class="dropdown-menu">
-		 <li><a href="<?php echo $this->url('Contact:Admin:Add@indexAction'); ?>"><i class="glyphicon glyphicon-plus"></i> <?php $this->show('Add new contact'); ?></a></li>
+		 <li><a href="<?php echo $this->url('Contact:Admin:Add@indexAction'); ?>"><i class="glyphicon glyphicon-phone-alt"></i> <?php $this->show('Add new contact'); ?></a></li>
 		 <li class="divider"></li>
 		 <li class="dropdown-header"><?php $this->show('Actions'); ?></li>
 		 <?php if (!empty($contacts)): ?>
