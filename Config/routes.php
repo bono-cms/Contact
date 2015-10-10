@@ -20,6 +20,11 @@ return array(
 		'controller' => 'Admin:Browser@deleteAction',
 		'disallow' => array('guest')
 	),
+
+	'/admin/module/contact/delete-selected.ajax' => array(
+		'controller' => 'Admin:Browser@deleteSelectedAction',
+		'disallow' => array('guest')
+	),
 	
 	'/admin/module/contact' => array(
 		'controller' => 'Admin:Browser@indexAction'
@@ -40,11 +45,6 @@ return array(
 	
 	'/admin/module/contact/edit.ajax'	=> array(
 		'controller' => 'Admin:Edit@updateAction',
-		'disallow' => array('guest')
-	),
-	
-	'/admin/module/contact/add/delete.ajax'	=> array(
-		'controller' => 'Admin:Browser@deleteAction',
 		'disallow' => array('guest')
 	)
 );
