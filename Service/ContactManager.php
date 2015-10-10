@@ -218,7 +218,7 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
 	/**
 	 * Adds a contact
 	 * 
-	 * @param array $input Raw form data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function add(array $input)
@@ -230,7 +230,7 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
 	/**
 	 * Updates a contact
 	 * 
-	 * @param array $form Raw form data
+	 * @param array $input Raw input data
 	 * @return boolean
 	 */
 	public function update(array $input)
