@@ -35,12 +35,12 @@ final class Add extends AbstractContact
 	 */
 	public function addAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('contact'));
 
 		if ($formValidator->isValid()) {
 			$contactManager = $this->getContactManager();
 
-			if ($contactManager->add($this->request->getPost())) {
+			if ($contactManager->add($this->request->getPost('contact'))) {
 				$this->flashBag->set('success', 'A contact has been added successfully');
 				return $contactManager->getLastId();
 			}

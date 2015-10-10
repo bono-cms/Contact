@@ -42,10 +42,10 @@ final class Edit extends AbstractContact
 	 */
 	public function updateAction()
 	{
-		$formValidator = $this->getValidator($this->request->getPost());
+		$formValidator = $this->getValidator($this->request->getPost('contact'));
 
 		if ($formValidator->isValid()) {
-			if ($this->getContactManager()->update($this->request->getPost())) {
+			if ($this->getContactManager()->update($this->request->getPost('contact'))) {
 				$this->flashBag->set('success', 'The contact has been updated successfully');
 				return '1';
 			}
