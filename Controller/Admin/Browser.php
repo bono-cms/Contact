@@ -100,7 +100,7 @@ final class Browser extends AbstractController
 			$id = $this->request->getPost('id');
 
 			$this->getContactManager()->deleteById($id);
-			$this->flashMessenger->set('success', 'Selected contact has been removed successfully');
+			$this->flashBag->set('success', 'Selected contact has been removed successfully');
 
 			return '1';
 		}
@@ -125,7 +125,7 @@ final class Browser extends AbstractController
 			$flashMessage = 'You should select at least on contact to remove';
 		}
 
-		$this->flashMessenger->set($flashKey, $flashMessage);
+		$this->flashBag->set($flashKey, $flashMessage);
 		return '1';
 	}
 }
