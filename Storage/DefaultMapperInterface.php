@@ -22,13 +22,6 @@ interface DefaultMapperInterface
 	public function isDefault($id);
 
 	/**
-	 * Fetches all defaults
-	 * 
-	 * @return array
-	 */
-	public function fetchAll();
-
-	/**
 	 * Inserts default contact id
 	 * 
 	 * @param string $contactId
