@@ -100,7 +100,6 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
 						->from(self::getTableName())
 						->whereEquals('lang_id', $this->getLangId())
 						->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'))
-						->desc()
 						->queryAll();
 	}
 
