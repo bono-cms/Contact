@@ -155,19 +155,6 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
 	}
 
 	/**
-	 * Checks whether contact id is a default one
-	 * 
-	 * @param string $id Contact id
-	 * @return boolean
-	 */
-	private function isDefault($id)
-	{
-		//@TODO
-		return false;
-		d($this->getDefaults());
-	}
-
-	/**
 	 * {@inheritDoc} 
 	 */
 	protected function toEntity(array $contact)
@@ -179,7 +166,7 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
 			   ->setEmail(Filter::escape($contact['email']))
 			   ->setDescription(Filter::escape($contact['description']))
 			   ->setOrder((int) $contact['order'])
-			   ->setDefault((bool) $this->isDefault($entity->getId()))
+			   ->setDefault((bool) $this->defaultMapper->isDefault($entity->getId()))
 			   ->setPublished((bool) $contact['published']);
 
 		return $entity;
