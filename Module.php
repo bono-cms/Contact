@@ -13,6 +13,7 @@ namespace Contact;
 
 use Cms\AbstractCmsModule;
 use Contact\Service\ContactManager;
+use Contact\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
@@ -24,10 +25,11 @@ final class Module extends AbstractCmsModule
 		$contactMapper = $this->getMapper('/Contact/Storage/MySQL/ContactMapper');
 		$defaultMapper = $this->getMapper('/Contact/Storage/MySQL/DefaultMapper');
 
-		$historyManager = $this->getHistoryManager();
+		$contactManager = new ContactManager($contactMapper, $defaultMapper, $this->getHistoryManager());
 
 		return array(
-			'contactManager' => new ContactManager($contactMapper, $defaultMapper, $historyManager)
+			'contactManager' => $contactManager,
+			'siteService' => new SiteService($contactManager)
 		);
 	}
 }
