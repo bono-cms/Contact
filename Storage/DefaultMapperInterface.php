@@ -14,6 +14,14 @@ namespace Contact\Storage;
 interface DefaultMapperInterface
 {
 	/**
+	 * Checks whether target contact id was marked as default
+	 * 
+	 * @param string $id
+	 * @return boolean
+	 */
+	public function isDefault($id);
+
+	/**
 	 * Fetches all defaults
 	 * 
 	 * @return array
