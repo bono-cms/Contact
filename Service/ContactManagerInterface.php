@@ -52,13 +52,6 @@ interface ContactManagerInterface
 	public function makeDefault($id);
 
 	/**
-	 * Fetches dummy contact bag
-	 * 
-	 * @return \Bono\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy();
-
-	/**
 	 * Fetches all contact bags filtered by pagination
 	 * 
 	 * @param integer $page Current page

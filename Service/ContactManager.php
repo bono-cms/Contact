@@ -186,24 +186,6 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
 	}
 
 	/**
-	 * Fetches dummy contact entity
-	 * 
-	 * @return \Bono\Stdlib\VirtualEntity
-	 */
-	public function fetchDummy()
-	{
-		return $this->toEntity(array(
-			'id' => null,
-			'name' => null,
-			'phone' => null,
-			'email' => null,
-			'description' => null,
-			'order' => null,
-			'published' => true
-		));
-	}
-
-	/**
 	 * Fetches all contact bags filtered by pagination
 	 * 
 	 * @param integer $page Current page
