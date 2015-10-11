@@ -11,6 +11,8 @@
 
 namespace Contact\Controller\Admin;
 
+use Krystal\Stdlib\VirtualEntity;
+
 final class Add extends AbstractContact
 {
 	/**
@@ -22,9 +24,12 @@ final class Add extends AbstractContact
 	{
 		$this->loadSharedPlugins();
 
+		$contact = new VirtualEntity();
+		$contact->setPublished(true);
+
 		return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
 			'title' => 'Add a contact',
-			'contact' => $this->getContactManager()->fetchDummy()
+			'contact' => $contact
 		)));
 	}
 
