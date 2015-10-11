@@ -57,6 +57,13 @@ interface ContactMapperInterface
 	public function fetchAllByPage($page, $itemsPerPage);
 
 	/**
+	 * Fetches all published contacts
+	 * 
+	 * @return array
+	 */
+	public function fetchAllPublished();
+
+	/**
 	 * Deletes a contact by its associated id
 	 * 
 	 * @param string $id Contact id

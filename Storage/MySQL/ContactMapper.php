@@ -13,6 +13,7 @@ namespace Contact\Storage\MySQL;
 
 use Cms\Storage\MySQL\AbstractMapper;
 use Contact\Storage\ContactMapperInterface;
+use Krystal\Db\Sql\RawSqlFragment;
 
 final class ContactMapper extends AbstractMapper implements ContactMapperInterface
 {
@@ -85,6 +86,21 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
 						->orderBy('id')
 						->desc()
 						->paginate($page, $itemsPerPage)
+						->queryAll();
+	}
+
+	/**
+	 * Fetches all published contacts
+	 * 
+	 * @return array
+	 */
+	public function fetchAllPublished()
+	{
+		return $this->db->select('*')
+						->from(self::getTableName())
+						->whereEquals('lang_id', $this->getLangId())
+						->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'))
+						->desc()
 						->queryAll();
 	}
 
