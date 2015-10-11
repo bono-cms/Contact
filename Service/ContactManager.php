@@ -185,6 +185,16 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
 	}
 
 	/**
+	 * Fetches all published contact entities
+	 * 
+	 * @return array
+	 */
+	public function fetchAllPublished()
+	{
+		return $this->prepareResults($this->contactMapper->fetchAllPublished());
+	}
+
+	/**
 	 * Adds a contact
 	 * 
 	 * @param array $input Raw input data

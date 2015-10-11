@@ -61,6 +61,13 @@ interface ContactManagerInterface
 	public function fetchAllByPage($page, $itemsPerPage);
 
 	/**
+	 * Fetches all published contact entities
+	 * 
+	 * @return array
+	 */
+	public function fetchAllPublished();
+
+	/**
 	 * Adds a contact
 	 * 
 	 * @param array $input Raw input data
