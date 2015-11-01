@@ -13,10 +13,10 @@ namespace Contact\Service;
 
 interface SiteServiceInterface
 {
-	/**
-	 * Returns all contact entities
-	 * 
-	 * @return array
-	 */
-	public function getAll();
+    /**
+     * Returns all contact entities
+     * 
+     * @return array
+     */
+    public function getAll();
 }

@@ -13,34 +13,34 @@ namespace Contact\Storage;
 
 interface DefaultMapperInterface
 {
-	/**
-	 * Checks whether target contact id was marked as default
-	 * 
-	 * @param string $id
-	 * @return boolean
-	 */
-	public function isDefault($id);
+    /**
+     * Checks whether target contact id was marked as default
+     * 
+     * @param string $id
+     * @return boolean
+     */
+    public function isDefault($id);
 
-	/**
-	 * Inserts default contact id
-	 * 
-	 * @param string $contactId
-	 * @return boolean
-	 */
-	public function insert($contactId);
+    /**
+     * Inserts default contact id
+     * 
+     * @param string $contactId
+     * @return boolean
+     */
+    public function insert($contactId);
 
-	/**
-	 * Updates default id
-	 * 
-	 * @param string $id Contact id
-	 * @return boolean
-	 */
-	public function update($id);
+    /**
+     * Updates default id
+     * 
+     * @param string $id Contact id
+     * @return boolean
+     */
+    public function update($id);
 
-	/**
-	 * Checks whether a default was defined for contact
-	 * 
-	 * @return boolean
-	 */
-	public function exists();
+    /**
+     * Checks whether a default was defined for contact
+     * 
+     * @return boolean
+     */
+    public function exists();
 }

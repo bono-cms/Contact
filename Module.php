@@ -17,19 +17,19 @@ use Contact\Service\SiteService;
 
 final class Module extends AbstractCmsModule
 {
-	/**
-	 * {@inheritDoc}
-	 */
-	public function getServiceProviders()
-	{
-		$contactMapper = $this->getMapper('/Contact/Storage/MySQL/ContactMapper');
-		$defaultMapper = $this->getMapper('/Contact/Storage/MySQL/DefaultMapper');
+    /**
+     * {@inheritDoc}
+     */
+    public function getServiceProviders()
+    {
+        $contactMapper = $this->getMapper('/Contact/Storage/MySQL/ContactMapper');
+        $defaultMapper = $this->getMapper('/Contact/Storage/MySQL/DefaultMapper');
 
-		$contactManager = new ContactManager($contactMapper, $defaultMapper, $this->getHistoryManager());
+        $contactManager = new ContactManager($contactMapper, $defaultMapper, $this->getHistoryManager());
 
-		return array(
-			'contactManager' => $contactManager,
-			'siteService' => new SiteService($contactManager)
-		);
-	}
+        return array(
+            'contactManager' => $contactManager,
+            'siteService' => new SiteService($contactManager)
+        );
+    }
 }

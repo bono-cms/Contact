@@ -10,11 +10,11 @@
  */
 
 return array(
-	'module' => array(
-		'name'	=> 'Contact',
-		'url'	=> '/admin/module/contact',
-		'icon'	=> '/module/Contact/Assets/contact.png',
-		'order'	=> 1,
-		'description' => 'Contact module allows you to manage contact information on your site'
-	)
+    'module' => array(
+        'name'  => 'Contact',
+        'url'   => '/admin/module/contact',
+        'icon'  => '/module/Contact/Assets/contact.png',
+        'order' => 1,
+        'description' => 'Contact module allows you to manage contact information on your site'
+    )
 );
