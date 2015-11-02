@@ -56,38 +56,34 @@ final class Browser extends AbstractController
     private function loadPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/browser.js'));
+                   ->appendScript('@Contact/admin/browser.js');
 
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'name' => 'Contacts',
-                'link' => '#'
-            )
-        ));
+        $this->view->getBreadcrumbBag()->addOne('Contacts');
     }
 
     /**
      * Saves table configuration
      * 
-     * @return string The response
+     * @return string
      */
     public function saveAction()
     {
-        if ($this->request->hasPost('order', 'published', 'default') && $this->request->isAjax()) {
+        if ($this->request->hasPost('order', 'published') && $this->request->isAjax()) {
 
             // Grab request data
             $published = $this->request->getPost('published');
             $orders = $this->request->getPost('order');
-            $default = $this->request->getPost('default');
 
             // Do update
             $contactManager = $this->getContactManager();
             $contactManager->updateOrders($orders);
             $contactManager->updatePublished($published);
-            $contactManager->makeDefault($default);
+
+            if ($this->request->hasPost('default')) {
+                $contactManager->makeDefault($this->request->getPost('default'));
+            }
 
             $this->flashBag->set('success', 'Configuration has been updated successfully');
-
             return '1';
         }
     }
@@ -100,7 +96,6 @@ final class Browser extends AbstractController
     public function deleteAction()
     {
         if ($this->request->hasPost('id') && $this->request->isAjax()) {
-
             $id = $this->request->getPost('id');
 
             $this->getContactManager()->deleteById($id);
@@ -118,7 +113,6 @@ final class Browser extends AbstractController
     public function deleteSelectedAction()
     {
         if ($this->request->hasPost('toDelete')) {
-
             $ids = array_keys($this->request->getPost('toDelete'));
 
             $contactManager = $this->getContactManager();

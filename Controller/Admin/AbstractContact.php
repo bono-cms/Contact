@@ -42,7 +42,7 @@ abstract class AbstractContact extends AbstractController
      */
     final protected function getContactManager()
     {
-        return $this->moduleManager->getModule('Contact')->getService('contactManager');
+        return $this->getModuleService('contactManager');
     }
 
     /**
@@ -53,7 +53,7 @@ abstract class AbstractContact extends AbstractController
     final protected function loadSharedPlugins()
     {
         $this->view->getPluginBag()
-                   ->appendScript($this->getWithAssetPath('/admin/contact.form.js'));
+                   ->appendScript('@Contact/admin/contact.form.js');
     }
 
     /**
@@ -67,27 +67,14 @@ abstract class AbstractContact extends AbstractController
     }
 
     /**
-     * Returns shared variables for Add and Edit controllers
+     * Loads breadcrumbs
      * 
-     * @param array $overrides
-     * @return array
+     * @param string $title
+     * @return void
      */
-    final protected function getSharedVars(array $overrides)
+    final protected function loadBreadcrumbs($title)
     {
-        $this->view->getBreadcrumbBag()->add(array(
-            array(
-                'name' => 'Contacts',
-                'link' => 'Contact:Admin:Browser@indexAction'
-            ),
-            array(
-                'name' => $overrides['title'],
-                'link' => '#'
-            )
-        ));
-
-        $vars = array(
-        );
-
-        return array_replace_recursive($vars, $overrides);
+        $this->view->getBreadcrumbBag()->addOne('Contacts', 'Contact:Admin:Browser@indexAction')
+                                       ->addOne($title);
     }
 }

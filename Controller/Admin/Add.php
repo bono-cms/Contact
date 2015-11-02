@@ -23,14 +23,15 @@ final class Add extends AbstractContact
     public function indexAction()
     {
         $this->loadSharedPlugins();
+        $this->loadBreadcrumbs('Add a contact');
 
         $contact = new VirtualEntity();
         $contact->setPublished(true);
 
-        return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+        return $this->view->render($this->getTemplatePath(), array(
             'title' => 'Add a contact',
             'contact' => $contact
-        )));
+        ));
     }
 
     /**

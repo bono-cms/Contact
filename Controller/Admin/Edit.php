@@ -16,7 +16,7 @@ final class Edit extends AbstractContact
     /**
      * Shows edit form
      * 
-     * @param string $id Contact's id
+     * @param string $id
      * @return string
      */
     public function indexAction($id)
@@ -25,10 +25,12 @@ final class Edit extends AbstractContact
 
         if ($contact !== false) {
             $this->loadSharedPlugins();
-            return $this->view->render($this->getTemplatePath(), $this->getSharedVars(array(
+            $this->loadBreadcrumbs('Edit the contact');
+
+            return $this->view->render($this->getTemplatePath(), array(
                 'title' => 'Edit the contact',
                 'contact' => $contact
-            )));
+            ));
 
         } else {
             return false;
