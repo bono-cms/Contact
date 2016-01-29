@@ -10,45 +10,35 @@
  */
 
 return array(
-    
-    '/admin/module/contact/save.ajax' => array(
-        'controller' => 'Admin:Browser@saveAction',
+
+    '/admin/module/contact/tweak' => array(
+        'controller' => 'Admin:Contact@tweakAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/contact/delete.ajax' => array(
-        'controller' => 'Admin:Browser@deleteAction',
+    '/admin/module/contact/delete' => array(
+        'controller' => 'Admin:Contact@deleteAction',
         'disallow' => array('guest')
     ),
 
-    '/admin/module/contact/delete-selected.ajax' => array(
-        'controller' => 'Admin:Browser@deleteSelectedAction',
-        'disallow' => array('guest')
-    ),
-    
     '/admin/module/contact' => array(
-        'controller' => 'Admin:Browser@indexAction'
+        'controller' => 'Admin:Contact@gridAction'
     ),
-    
+
     '/admin/module/contact/page/(:var)' => array(
-        'controller'    => 'Admin:Browser@indexAction'
+        'controller'    => 'Admin:Contact@gridAction'
     ),
-    
+
     '/admin/module/contact/add' => array(
-        'controller' => 'Admin:Add@indexAction'
+        'controller' => 'Admin:Contact@addAction'
     ),
-    
-    '/admin/module/contact/add.ajax' => array(
-        'controller' => 'Admin:Add@addAction',
-        'disallow' => array('guest')
-    ),
-    
+
     '/admin/module/contact/edit/(:var)' => array(
-        'controller' => 'Admin:Edit@indexAction'
+        'controller' => 'Admin:Contact@editAction'
     ),
-    
-    '/admin/module/contact/edit.ajax'   => array(
-        'controller' => 'Admin:Edit@updateAction',
+
+    '/admin/module/contact/save' => array(
+        'controller' => 'Admin:Contact@saveAction',
         'disallow' => array('guest')
     )
 );
