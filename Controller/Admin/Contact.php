@@ -130,27 +130,7 @@ final class Contact extends AbstractController
      */
     public function deleteAction()
     {
-        $contactManager = $this->getModuleService('contactManager');
-
-        // Batch removal
-        if ($this->request->hasPost('toDelete')) {
-            $ids = array_keys($this->request->getPost('toDelete'));
-
-            $contactManager->deleteByIds($ids);
-            $this->flashBag->set('success', 'Selected contacts have been removed successfully');
-        } else {
-            $this->flashBag->set('warning', 'You should select at least one contact to remove');
-        }
-
-        // Single removal
-        if ($this->request->hasPost('id') && $this->request->isAjax()) {
-            $id = $this->request->getPost('id');
-
-            $contactManager->deleteById($id);
-            $this->flashBag->set('success', 'Selected contact has been removed successfully');
-        }
-
-        return '1';
+        return $this->invokeRemoval('contactManager');
     }
 
     /**
@@ -162,7 +142,7 @@ final class Contact extends AbstractController
     {
         $input = $this->request->getPost('contact');
 
-        $formValidator = $this->validatorFactory->build(array(
+        return $this->invokeSave('contactManager', $input['id'], $input, array(
             'input' => array(
                 'source' => $input,
                 'definition' => array(
@@ -171,26 +151,5 @@ final class Contact extends AbstractController
                 )
             )
         ));
-
-        if ($formValidator->isValid()) {
-            $contactManager = $this->getModuleService('contactManager');
-
-            // If id is empty, then do add, otherwise do update
-            if ($input['id']) {
-                if ($contactManager->update($input)) {
-                    $this->flashBag->set('success', 'The contact has been updated successfully');
-                    return '1';
-                }
-
-            } else {
-                if ($contactManager->add($input)) {
-                    $this->flashBag->set('success', 'A contact has been added successfully');
-                    return $contactManager->getLastId();
-                }
-            }
-
-        } else {
-            return $formValidator->getErrors();
-        }
     }
 }

@@ -13,7 +13,7 @@ return array(
     'module' => array(
         'name'  => 'Contact',
         'url'   => '/admin/module/contact',
-        'icon'  => '/module/Contact/Assets/contact.png',
+        'icon'  => 'fa fa-phone-square fa-5x',
         'order' => 1,
         'description' => 'Contact module allows you to manage contact information on your site'
     )
