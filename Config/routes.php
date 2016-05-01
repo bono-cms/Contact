@@ -16,7 +16,7 @@ return array(
         'disallow' => array('guest')
     ),
     
-    '/admin/module/contact/delete' => array(
+    '/admin/module/contact/delete/(:var)' => array(
         'controller' => 'Admin:Contact@deleteAction',
         'disallow' => array('guest')
     ),

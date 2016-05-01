@@ -25,10 +25,6 @@ final class Contact extends AbstractController
      */
     public function gridAction($page = 1)
     {
-        // Load view plugins
-        $this->view->getPluginBag()
-                   ->appendScript('@Contact/admin/browser.js');
-
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
                    ->addOne('Contacts');
@@ -126,11 +122,12 @@ final class Contact extends AbstractController
     /**
      * Deletes a contact or a collection of contacts
      * 
+     * @param string $id
      * @return string
      */
-    public function deleteAction()
+    public function deleteAction($id)
     {
-        return $this->invokeRemoval('contactManager');
+        return $this->invokeRemoval('contactManager', $id);
     }
 
     /**
