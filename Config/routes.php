@@ -10,34 +10,33 @@
  */
 
 return array(
-
-    '/admin/module/contact/tweak' => array(
+    '/%s/module/contact/tweak' => array(
         'controller' => 'Admin:Contact@tweakAction',
         'disallow' => array('guest')
     ),
     
-    '/admin/module/contact/delete/(:var)' => array(
+    '/%s/module/contact/delete/(:var)' => array(
         'controller' => 'Admin:Contact@deleteAction',
         'disallow' => array('guest')
     ),
 
-    '/admin/module/contact' => array(
+    '/%s/module/contact' => array(
         'controller' => 'Admin:Contact@gridAction'
     ),
 
-    '/admin/module/contact/page/(:var)' => array(
+    '/%s/module/contact/page/(:var)' => array(
         'controller'    => 'Admin:Contact@gridAction'
     ),
 
-    '/admin/module/contact/add' => array(
+    '/%s/module/contact/add' => array(
         'controller' => 'Admin:Contact@addAction'
     ),
 
-    '/admin/module/contact/edit/(:var)' => array(
+    '/%s/module/contact/edit/(:var)' => array(
         'controller' => 'Admin:Contact@editAction'
     ),
 
-    '/admin/module/contact/save' => array(
+    '/%s/module/contact/save' => array(
         'controller' => 'Admin:Contact@saveAction',
         'disallow' => array('guest')
     )
