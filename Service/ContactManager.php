@@ -160,14 +160,14 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     protected function toEntity(array $contact)
     {
         $entity = new VirtualEntity();
-        $entity->setId((int) $contact['id'])
-               ->setName(Filter::escape($contact['name']))
-               ->setPhone(Filter::escape($contact['phone']))
-               ->setEmail(Filter::escape($contact['email']))
-               ->setDescription(Filter::escape($contact['description']))
-               ->setOrder((int) $contact['order'])
-               ->setDefault((bool) $this->defaultMapper->isDefault($entity->getId()))
-               ->setPublished((bool) $contact['published']);
+        $entity->setId($contact['id'], VirtualEntity::FILTER_INT)
+               ->setName($contact['name'], VirtualEntity::FILTER_TAGS)
+               ->setPhone($contact['phone'], VirtualEntity::FILTER_TAGS)
+               ->setEmail($contact['email'], VirtualEntity::FILTER_TAGS)
+               ->setDescription($contact['description'], VirtualEntity::FILTER_TAGS)
+               ->setOrder($contact['order'], VirtualEntity::FILTER_INT)
+               ->setDefault($this->defaultMapper->isDefault($entity->getId()), VirtualEntity::FILTER_BOOL)
+               ->setPublished($contact['published'], VirtualEntity::FILTER_BOOL);
 
         return $entity;
     }
