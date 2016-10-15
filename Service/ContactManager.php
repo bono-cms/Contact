@@ -161,10 +161,10 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     {
         $entity = new VirtualEntity();
         $entity->setId($contact['id'], VirtualEntity::FILTER_INT)
-               ->setName($contact['name'], VirtualEntity::FILTER_TAGS)
-               ->setPhone($contact['phone'], VirtualEntity::FILTER_TAGS)
-               ->setEmail($contact['email'], VirtualEntity::FILTER_TAGS)
-               ->setDescription($contact['description'], VirtualEntity::FILTER_TAGS)
+               ->setName($contact['name'], VirtualEntity::FILTER_HTML)
+               ->setPhone($contact['phone'], VirtualEntity::FILTER_HTML)
+               ->setEmail($contact['email'], VirtualEntity::FILTER_HTML)
+               ->setDescription($contact['description'], VirtualEntity::FILTER_HTML)
                ->setOrder($contact['order'], VirtualEntity::FILTER_INT)
                ->setDefault($this->defaultMapper->isDefault($entity->getId()), VirtualEntity::FILTER_BOOL)
                ->setPublished($contact['published'], VirtualEntity::FILTER_BOOL);
