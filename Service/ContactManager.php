@@ -202,6 +202,8 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      */
     public function add(array $input)
     {
+        $input['order'] = (int) $input['order'];
+
         $this->track('Contact "%s" has been added', $input['name']);
         return $this->contactMapper->insert(ArrayUtils::arrayWithout($input, array('makeDefault')));
     }
@@ -214,6 +216,8 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      */
     public function update(array $input)
     {
+        $input['order'] = (int) $input['order'];
+
         $this->track('Contact "%s" has been updated', $input['name']);
         return $this->contactMapper->update($input);
     }
