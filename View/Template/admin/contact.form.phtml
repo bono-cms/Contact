@@ -1,95 +1,102 @@
-<?php defined('KRYSTAL') or die; ?>
 <?php
 
 use Krystal\Form\Element;
+use Cms\Service\LanguageManager;
+
+defined('KRYSTAL') or die;
 
 ?>
+
 <form data-group="contact">
-	<div class="well">
-		<input type="hidden" name="contact[id]" value="<?php echo $contact->getId(); ?>" />
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-					<?php echo Element::text('contact[name]', $contact->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('Name'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-					<?php echo Element::text('contact[email]', $contact->getEmail(), array('class' => 'form-control', 'placeholder' => $this->translate('Email'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Phone'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-					<?php echo Element::text('contact[phone]', $contact->getPhone(), array('class' => 'form-control', 'placeholder' => $this->translate('Phone'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="form-group">
-			<label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
-			<div class="col-lg-10">
-				<div class="input-group">
-                    <?php echo Element::textarea('contact[description]', $contact->getDescription(), array('class' => 'form-control', 'placeholder' => $this->translate('Description'))); ?>
-					<span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
-				</div>
-			</div>
-		</div>
-		
-		<div class="options">
-			
-			<?php if (!$contact->getId()): ?>
-
-			<div class="form-group">
-				<label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
-				<div class="col-lg-10">
-                    <?php echo Element::checkbox('contact[makeDefault]', $contact->getDefault(), array('class' => 'form-control')); ?>
-				</div>
-			</div>
-
-			<?php endif; ?>
-			
-			<div class="form-group">
-				<label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
-				<div class="col-lg-10">
-                    <?php echo Element::checkbox('contact[published]', $contact->getPublished(), array('class' => 'form-control')); ?>
-				</div>
-			</div>
-			
-			<div class="form-group">
-				<label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
-				<div class="col-lg-10">
-                    <?php echo Element::number('contact[order]', $contact->getOrder(), array('class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Sort order'))); ?>
-				</div>
-			</div>
-		</div>
-	</div>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="active"><a href="#advice" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Contact'); ?></a></li>
+        <li role="presentation"><a href="#configuration" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Configuration'); ?></a></li>
+	</ul>
+    
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="advice" role="tabpanel">
+            <div class="well">
+                <div class="form-group">
+                    <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+                    <div class="col-lg-10">
+                        <div class="input-group">
+                            <?php echo Element::text('contact[name]', $contact->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('Name'))); ?>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
+                    <div class="col-lg-10">
+                        <div class="input-group">
+                            <?php echo Element::text('contact[email]', $contact->getEmail(), array('class' => 'form-control', 'placeholder' => $this->translate('Email'))); ?>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-2 control-label"><?php $this->show('Phone'); ?></label>
+                    <div class="col-lg-10">
+                        <div class="input-group">
+                            <?php echo Element::text('contact[phone]', $contact->getPhone(), array('class' => 'form-control', 'placeholder' => $this->translate('Phone'))); ?>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+                    <div class="col-lg-10">
+                        <div class="input-group">
+                            <?php echo Element::textarea('contact[description]', $contact->getDescription(), array('class' => 'form-control', 'placeholder' => $this->translate('Description'))); ?>
+                            <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="tab-pane fade" id="configuration" role="tabpanel">
+            <div class="well">
+                <?php echo Element::hidden('contact[id]', $contact->getId()); ?>
+                
+                <?php if (!$contact->getId()): ?>
+                <div class="form-group">
+                    <label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
+                    <div class="col-lg-10">
+                        <?php echo Element::checkbox('contact[makeDefault]', $contact->getDefault(), array('class' => 'form-control')); ?>
+                    </div>
+                </div>
+                <?php endif; ?>
+                
+                <div class="form-group">
+                    <label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+                    <div class="col-lg-10">
+                        <?php echo Element::checkbox('contact[published]', $contact->getPublished(), array('class' => 'form-control')); ?>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+                    <div class="col-lg-10">
+                        <?php echo Element::number('contact[order]', $contact->getOrder(), array('class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Sort order'))); ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 	
-	<?php if (!$contact->getId()): ?>
-	
+    <?php if (!$contact->getId()): ?>
 	<button data-button="add" data-back-url="<?php echo $this->url('Contact:Admin:Contact@editAction', null); ?>" data-url="<?php echo $this->url('Contact:Admin:Contact@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add'); ?></button>
 	<button data-button="add-create" data-url="<?php echo $this->url('Contact:Admin:Contact@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Add & Create new'); ?></button>
 	
-	<?php else: ?>
-	
+    <?php else: ?>
 	<button data-button="save" data-url="<?php echo $this->url('Contact:Admin:Contact@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save'); ?></button>
 	<button data-button="save-create" data-back-url="<?php echo $this->url('Contact:Admin:Contact@addAction'); ?>" data-url="<?php echo $this->url('Contact:Admin:Contact@saveAction'); ?>" class="btn btn-primary"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save & Create new'); ?></button>
-	
 	<?php endif; ?>
 	
-	<button data-button="options" class="btn btn-primary"><i class="glyphicon glyphicon-open"></i> <?php $this->show('More options'); ?></button>
 	<button data-button="cancel" data-url="<?php echo $this->url('Contact:Admin:Contact@gridAction'); ?>" class="btn btn-default"><i class="glyphicon glyphicon-floppy-remove"></i> <?php $this->show('Cancel'); ?></button>
-	
 </form>
