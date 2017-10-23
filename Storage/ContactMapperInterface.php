@@ -40,12 +40,13 @@ interface ContactMapperInterface
     public function fetchNameById($id);
 
     /**
-     * Fetches contact data by its associated id
+     * Fetches block data by its associated id
      * 
-     * @param string $id Contact id
+     * @param string $id Block id
+     * @param boolean $withTranslations Whether to fetch translations or not
      * @return array
      */
-    public function fetchById($id);
+    public function fetchById($id, $withTranslations);
 
     /**
      * Fetches all contacts filtered by pagination
@@ -62,28 +63,4 @@ interface ContactMapperInterface
      * @return array
      */
     public function fetchAllPublished();
-
-    /**
-     * Deletes a contact by its associated id
-     * 
-     * @param string $id Contact id
-     * @return boolean
-     */
-    public function deleteById($id);
-
-    /**
-     * Inserts a contact
-     * 
-     * @param array $data Contact data
-     * @return boolean
-     */
-    public function insert(array $data);
-
-    /**
-     * Updates contact data
-     * 
-     * @param array $data
-     * @return boolean
-     */
-    public function update(array $data);
 }

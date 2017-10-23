@@ -26,6 +26,33 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
     }
 
     /**
+     * {@inheritDoc}
+     */
+    public static function getTranslationTable()
+    {
+        return ContactTranslationMapper::getTableName();
+    }
+
+    /**
+     * Returns columns to be selected
+     * 
+     * @return array
+     */
+    private function getColumns()
+    {
+        return array(
+            self::getFullColumnName('id'),
+            self::getFullColumnName('order'),
+            self::getFullColumnName('published'),
+            ContactTranslationMapper::getFullColumnName('lang_id'),
+            ContactTranslationMapper::getFullColumnName('name'),
+            ContactTranslationMapper::getFullColumnName('phone'),
+            ContactTranslationMapper::getFullColumnName('email'),
+            ContactTranslationMapper::getFullColumnName('description')
+        );
+    }
+
+    /**
      * Updates published state by its associated id
      * 
      * @param string $id Contact id
@@ -61,14 +88,15 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
     }
 
     /**
-     * Fetches contact data by its associated id
+     * Fetches block data by its associated id
      * 
-     * @param string $id Contact id
+     * @param string $id Block id
+     * @param boolean $withTranslations Whether to fetch translations or not
      * @return array
      */
-    public function fetchById($id)
+    public function fetchById($id, $withTranslations)
     {
-        return $this->findByPk($id);
+        return $this->findEntity($this->getColumns(), $id, $withTranslations);
     }
 
     /**
@@ -80,13 +108,12 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
      */
     public function fetchAllByPage($page, $itemsPerPage)
     {
-        return $this->db->select('*')
-                        ->from(self::getTableName())
-                        ->whereEquals('lang_id', $this->getLangId())
-                        ->orderBy('id')
-                        ->desc()
-                        ->paginate($page, $itemsPerPage)
-                        ->queryAll();
+        return $this->createEntitySelect($this->getColumns())
+                    ->whereEquals(ContactTranslationMapper::getFullColumnName('lang_id'), $this->getLangId())
+                    ->orderBy(self::getFullColumnName('id'))
+                    ->desc()
+                    ->paginate($page, $itemsPerPage)
+                    ->queryAll();
     }
 
     /**
@@ -96,43 +123,9 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
      */
     public function fetchAllPublished()
     {
-        return $this->db->select('*')
-                        ->from(self::getTableName())
-                        ->whereEquals('lang_id', $this->getLangId())
-                        ->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'))
-                        ->queryAll();
-    }
-
-    /**
-     * Deletes a contact by its associated id
-     * 
-     * @param string $id Contact id
-     * @return boolean
-     */
-    public function deleteById($id)
-    {
-        return $this->deleteByPk($id);
-    }
-
-    /**
-     * Adds a contact
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function insert(array $input)
-    {
-        return $this->persist($this->getWithLang($input));
-    }
-
-    /**
-     * Updates contact data
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function update(array $input)
-    {
-        return $this->persist($this->getWithLang($input));
+        return $this->createEntitySelect($this->getColumns())
+                    ->whereEquals(ContactTranslationMapper::getFullColumnName('lang_id'), $this->getLangId())
+                    ->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'))
+                    ->queryAll();
     }
 }

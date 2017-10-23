@@ -161,6 +161,7 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     {
         $entity = new VirtualEntity();
         $entity->setId($contact['id'], VirtualEntity::FILTER_INT)
+               ->setLangId($contact['lang_id'], VirtualEntity::FILTER_INT)
                ->setName($contact['name'], VirtualEntity::FILTER_HTML)
                ->setPhone($contact['phone'], VirtualEntity::FILTER_HTML)
                ->setEmail($contact['email'], VirtualEntity::FILTER_HTML)
@@ -202,10 +203,10 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      */
     public function add(array $input)
     {
-        $input['order'] = (int) $input['order'];
+        //$input['order'] = (int) $input['order'];
+        //$this->track('Contact "%s" has been added', $input['name']);
 
-        $this->track('Contact "%s" has been added', $input['name']);
-        return $this->contactMapper->insert(ArrayUtils::arrayWithout($input, array('makeDefault')));
+        return $this->contactMapper->saveEntity(ArrayUtils::arrayWithout($input['contact'], array('makeDefault')), $input['translation']);
     }
 
     /**
@@ -216,10 +217,10 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      */
     public function update(array $input)
     {
-        $input['order'] = (int) $input['order'];
+        //$input['order'] = (int) $input['order'];
 
-        $this->track('Contact "%s" has been updated', $input['name']);
-        return $this->contactMapper->update($input);
+        //$this->track('Contact "%s" has been updated', $input['name']);
+        return $this->contactMapper->saveEntity($input['contact'], $input['translation']);
     }
 
     /**
@@ -230,12 +231,11 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      */
     public function deleteById($id)
     {
-        $name = Filter::escape($this->contactMapper->fetchNameById($id));
+        //$name = Filter::escape($this->contactMapper->fetchNameById($id));
 
-        if ($this->contactMapper->deleteById($id)) {
-            $this->track('Contact "%s" has been removed', $name);
+        if ($this->contactMapper->deleteEntity($id)) {
+            //$this->track('Contact "%s" has been removed', $name);
             return true;
-
         } else {
             return false;
         }
@@ -249,11 +249,7 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      */
     public function deleteByIds(array $ids)
     {
-        foreach ($ids as $id) {
-            if (!$this->contactMapper->deleteById($id)) {
-                return false;
-            }
-        }
+        $this->contactMapper->deleteEntity($ids);
 
         $this->track('Batch removal of %s contacts', count($ids));
         return true;
@@ -263,10 +259,15 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      * Fetches contact bag by associated id
      * 
      * @param string $id
+     * @param boolean $withTranslations Whether to fetch translations or not
      * @return boolean|\Bono\Stdlib\VirtualEntity
      */
-    public function fetchById($id)
+    public function fetchById($id, $withTranslations)
     {
-        return $this->prepareResult($this->contactMapper->fetchById($id));
+        if ($withTranslations == true) {
+            return $this->prepareResults($this->contactMapper->fetchById($id, true));
+        } else {
+            return $this->prepareResult($this->contactMapper->fetchById($id, false));
+        }
     }
 }

@@ -103,7 +103,8 @@ interface ContactManagerInterface
      * Fetches contact bag by associated id
      * 
      * @param string $id
-     * @return boolean|\Bono\Stdlib\VirtualBag
+     * @param boolean $withTranslations Whether to fetch translations or not
+     * @return boolean|\Bono\Stdlib\VirtualEntity
      */
-    public function fetchById($id);
+    public function fetchById($id, $withTranslations);
 }

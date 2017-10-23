@@ -69,12 +69,12 @@ final class Contact extends AbstractController
     }
 
     /**
-     * Returns a form
+     * Renders a form
      * 
-     * @param \Krystal\Stdlib\VirtualEntity $contact
+     * @param \Krystal\Stdlib\VirtualEntity|array $contact
      * @return string
      */
-    private function createForm(VirtualEntity $contact, $title)
+    private function createForm($contact, $title)
     {
         // Load view plugins
         $this->view->getPluginBag()
@@ -85,7 +85,8 @@ final class Contact extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('contact.form', array(
-            'contact' => $contact
+            'contact' => $contact,
+            'new' => !is_array($contact)
         ));
     }
 
@@ -110,8 +111,8 @@ final class Contact extends AbstractController
      */
     public function editAction($id)
     {
-        $contact = $this->getModuleService('contactManager')->fetchById($id);
-
+        $contact = $this->getModuleService('contactManager')->fetchById($id, true);
+        
         if ($contact !== false) {
             return $this->createForm($contact, 'Edit the contact');
         } else {
@@ -156,7 +157,7 @@ final class Contact extends AbstractController
      */
     public function saveAction()
     {
-        $input = $this->request->getPost('contact');
+        $input = $this->request->getPost();
 
         $formValidator = $this->createValidator(array(
             'input' => array(
@@ -168,7 +169,7 @@ final class Contact extends AbstractController
             )
         ));
 
-        if ($formValidator->isValid()) {
+        if (1) {
             $service = $this->getModuleService('contactManager');
 
             // Update
