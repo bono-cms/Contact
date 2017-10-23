@@ -1,6 +1,6 @@
 
-DROP TABLE IF EXISTS `bono_module_contact_records`;
-CREATE TABLE `bono_module_contact_records` (
+DROP TABLE IF EXISTS `bono_module_contact`;
+CREATE TABLE `bono_module_contact` (
 	
 	`id` INT NOT NULL PRIMARY KEY AUTO_INCREMENT,
 	`lang_id` INT NOT NULL COMMENT 'Language id which can be found in another table',

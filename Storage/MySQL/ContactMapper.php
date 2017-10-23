@@ -22,7 +22,7 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
      */
     public static function getTableName()
     {
-        return self::getWithPrefix('bono_module_contact_records');
+        return self::getWithPrefix('bono_module_contact');
     }
 
     /**
