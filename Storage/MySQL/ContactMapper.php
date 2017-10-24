@@ -53,27 +53,14 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
     }
 
     /**
-     * Updates published state by its associated id
+     * Update settings
      * 
-     * @param string $id Contact id
-     * @param string $published Either 0 or 1
+     * @param array $settings
      * @return boolean
      */
-    public function updatePublishedById($id, $published)
+    public function updateSettings($settings)
     {
-        return $this->updateColumnByPk($id, 'published', $published);
-    }
-
-    /**
-     * Updates contact's sort order
-     * 
-     * @param string $id Contact id
-     * @param integer $order New order
-     * @return boolean
-     */
-    public function updateOrderById($id, $order)
-    {
-        return $this->updateColumnByPk($id, 'order', $order);
+        return $this->updateColumns($settings, array('published', 'order'));
     }
 
     /**

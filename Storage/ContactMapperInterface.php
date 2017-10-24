@@ -14,22 +14,12 @@ namespace Contact\Storage;
 interface ContactMapperInterface
 {
     /**
-     * Updates published state by its associated id
+     * Update settings
      * 
-     * @param string $id Contact id
-     * @param string $published Either 0 or 1
+     * @param array $settings
      * @return boolean
      */
-    public function updatePublishedById($id, $published);
-
-    /**
-     * Updates contact's sort order
-     * 
-     * @param string $id Contact id
-     * @param integer $order New order
-     * @return boolean
-     */
-    public function updateOrderById($id, $order);
+    public function updateSettings($settings);
 
     /**
      * Fetches contact name by its associated id

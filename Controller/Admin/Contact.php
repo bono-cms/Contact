@@ -48,24 +48,16 @@ final class Contact extends AbstractController
      */
     public function tweakAction()
     {
-        if ($this->request->hasPost('order', 'published') && $this->request->isAjax()) {
+        // Do update
+        $contactManager = $this->getModuleService('contactManager');
+        $contactManager->updateSettings($this->request->getPost());
 
-            // Grab request data
-            $published = $this->request->getPost('published');
-            $orders = $this->request->getPost('order');
-
-            // Do update
-            $contactManager = $this->getModuleService('contactManager');
-            $contactManager->updateOrders($orders);
-            $contactManager->updatePublished($published);
-
-            if ($this->request->hasPost('default')) {
-                $contactManager->makeDefault($this->request->getPost('default'));
-            }
-
-            $this->flashBag->set('success', 'Configuration has been updated successfully');
-            return '1';
+        if ($this->request->hasPost('default')) {
+            $contactManager->makeDefault($this->request->getPost('default'));
         }
+
+        $this->flashBag->set('success', 'Configuration has been updated successfully');
+        return '1';
     }
 
     /**

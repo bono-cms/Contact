@@ -14,20 +14,12 @@ namespace Contact\Service;
 interface ContactManagerInterface
 {
     /**
-     * Updates published state by their associated ids
+     * Update settings
      * 
-     * @param array $pair
+     * @param array $settings
      * @return boolean
      */
-    public function updatePublished(array $pair);
-
-    /**
-     * Updates order values by associated ids
-     * 
-     * @param array $orders
-     * @return boolean
-     */
-    public function updateOrders(array $orders);
+    public function updateSettings($settings);
 
     /**
      * Returns last contact's id
