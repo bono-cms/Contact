@@ -39,18 +39,12 @@ interface ContactMapperInterface
     public function fetchById($id, $withTranslations);
 
     /**
-     * Fetches all contacts filtered by pagination
+     * Fetches all contacts optionally filtered by pagination
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Per page count
+     * @param boolean $published Whether to fetch only published or not
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage);
-
-    /**
-     * Fetches all published contacts
-     * 
-     * @return array
-     */
-    public function fetchAllPublished();
+    public function fetchAll($published, $page, $itemsPerPage);
 }

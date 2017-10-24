@@ -44,20 +44,14 @@ interface ContactManagerInterface
     public function makeDefault($id);
 
     /**
-     * Fetches all contact bags filtered by pagination
+     * Fetches all contacts optionally filtered by pagination
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Per page count
-     * @return array|boolean
-     */
-    public function fetchAllByPage($page, $itemsPerPage);
-
-    /**
-     * Fetches all published contact entities
-     * 
+     * @param boolean $published Whether to fetch only published or not
      * @return array
      */
-    public function fetchAllPublished();
+    public function fetchAll($published, $page, $itemsPerPage);
 
     /**
      * Adds a contact

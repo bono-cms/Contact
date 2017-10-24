@@ -87,32 +87,30 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
     }
 
     /**
-     * Fetches all contacts filtered by pagination
+     * Fetches all contacts optionally filtered by pagination
      * 
      * @param integer $page Current page
      * @param integer $itemsPerPage Per page count
+     * @param boolean $published Whether to fetch only published or not
      * @return array
      */
-    public function fetchAllByPage($page, $itemsPerPage)
+    public function fetchAll($published, $page, $itemsPerPage)
     {
-        return $this->createEntitySelect($this->getColumns())
-                    ->whereEquals(ContactTranslationMapper::getFullColumnName('lang_id'), $this->getLangId())
-                    ->orderBy(self::getFullColumnName('id'))
-                    ->desc()
-                    ->paginate($page, $itemsPerPage)
-                    ->queryAll();
-    }
+        $db = $this->createEntitySelect($this->getColumns())
+                   // Language ID constraint
+                   ->whereEquals(ContactTranslationMapper::getFullColumnName('lang_id'), $this->getLangId());
 
-    /**
-     * Fetches all published contacts
-     * 
-     * @return array
-     */
-    public function fetchAllPublished()
-    {
-        return $this->createEntitySelect($this->getColumns())
-                    ->whereEquals(ContactTranslationMapper::getFullColumnName('lang_id'), $this->getLangId())
-                    ->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'))
-                    ->queryAll();
+        if ($published === true) {
+            $db->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'));
+        } else {
+            $db->orderBy(self::getFullColumnName('id'))
+               ->desc();
+        }
+
+        if ($page !== null && $itemsPerPage !== null) {
+            $db->paginate($page, $itemsPerPage);
+        }
+
+        return $db->queryAll();
     }
 }

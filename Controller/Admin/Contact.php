@@ -30,7 +30,7 @@ final class Contact extends AbstractController
                    ->addOne('Contacts');
 
         $contactManager = $this->getModuleService('contactManager');
-        $contacts = $contactManager->fetchAllByPage($page, $this->getSharedPerPageCount());
+        $contacts = $contactManager->fetchAll(false, $page, $this->getSharedPerPageCount());
 
         $paginator = $contactManager->getPaginator();
         $paginator->setUrl($this->createUrl('Contact:Admin:Contact@gridAction', array(), 1));
