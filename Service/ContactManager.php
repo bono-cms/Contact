@@ -14,7 +14,6 @@ namespace Contact\Service;
 use Cms\Service\AbstractManager;
 use Cms\Service\HistoryManagerInterface;
 use Contact\Storage\ContactMapperInterface;
-use Contact\Storage\DefaultMapperInterface;
 use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
@@ -29,13 +28,6 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     private $contactMapper;
 
     /**
-     * Any compliant contact default mapper
-     * 
-     * @var \Contact\Storage\DefaultMapperInterface
-     */
-    private $defaultMapper;
-
-    /**
      * History manager to keep tracks
      * 
      * @var \Cms\Service\HistoryManagerInterface
@@ -46,14 +38,12 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      * State initialization
      * 
      * @param \Contact\Storage\ContactMapperInterface $contactMapper
-     * @param \Contact\Storage\DefaultMapperInterface $defaultMapper
      * @param \Cms\Service\HistoryManagerInterface $historyManager
      * @return void
      */
-    public function __construct(ContactMapperInterface $contactMapper, DefaultMapperInterface $defaultMapper, HistoryManagerInterface $historyManager)
+    public function __construct(ContactMapperInterface $contactMapper, HistoryManagerInterface $historyManager)
     {
         $this->contactMapper = $contactMapper;
-        $this->defaultMapper = $defaultMapper;
         $this->historyManager = $historyManager;
     }
 
@@ -108,27 +98,7 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      */
     public function makeDefault($id)
     {
-        if ($this->defaultMapper->exists()) {
-            return $this->defaultMapper->update($id);
-        } else {
-            return $this->defaultMapper->insert($id);
-        }
-    }
-
-    /**
-     * Returns default associations with language ids
-     * 
-     * @return array
-     */
-    private function getDefaults()
-    {
-        static $defaults = null;
-
-        if (is_null($defaults)) {
-            $defaults = $this->defaultMapper->fetchAll();
-        }
-
-        return $defaults;
+        return $this->contactMapper->updateDefault((int) $id);
     }
 
     /**
@@ -144,7 +114,7 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
                ->setEmail($contact['email'], VirtualEntity::FILTER_HTML)
                ->setDescription($contact['description'], VirtualEntity::FILTER_HTML)
                ->setOrder($contact['order'], VirtualEntity::FILTER_INT)
-               ->setDefault($this->defaultMapper->isDefault($entity->getId()), VirtualEntity::FILTER_BOOL)
+               ->setDefault($contact['default'], VirtualEntity::FILTER_BOOL)
                ->setPublished($contact['published'], VirtualEntity::FILTER_BOOL);
 
         return $entity;

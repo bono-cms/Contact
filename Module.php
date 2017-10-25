@@ -23,9 +23,7 @@ final class Module extends AbstractCmsModule
     public function getServiceProviders()
     {
         $contactMapper = $this->getMapper('/Contact/Storage/MySQL/ContactMapper');
-        $defaultMapper = $this->getMapper('/Contact/Storage/MySQL/DefaultMapper');
-
-        $contactManager = new ContactManager($contactMapper, $defaultMapper, $this->getHistoryManager());
+        $contactManager = new ContactManager($contactMapper, $this->getHistoryManager());
 
         return array(
             'contactManager' => $contactManager,

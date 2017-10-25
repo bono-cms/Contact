@@ -14,6 +14,14 @@ namespace Contact\Storage;
 interface ContactMapperInterface
 {
     /**
+     * Marks contact ID as a default one
+     * 
+     * @param string $id Contact ID
+     * @return boolean
+     */
+    public function updateDefault($id);
+
+    /**
      * Update settings
      * 
      * @param array $settings

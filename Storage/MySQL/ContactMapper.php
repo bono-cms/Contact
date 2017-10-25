@@ -44,12 +44,30 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
             self::getFullColumnName('id'),
             self::getFullColumnName('order'),
             self::getFullColumnName('published'),
+            self::getFullColumnName('default'),
             ContactTranslationMapper::getFullColumnName('lang_id'),
             ContactTranslationMapper::getFullColumnName('name'),
             ContactTranslationMapper::getFullColumnName('phone'),
             ContactTranslationMapper::getFullColumnName('email'),
             ContactTranslationMapper::getFullColumnName('description')
         );
+    }
+
+    /**
+     * Marks contact ID as a default one
+     * 
+     * @param string $id Contact ID
+     * @return boolean
+     */
+    public function updateDefault($id)
+    {
+        // Data to be updated
+        $data = array(
+            'default' => new RawSqlFragment('CASE WHEN id = '.$id.' THEN 1 ELSE 0 END')
+        );
+
+        return $this->db->update(self::getTableName(), $data)
+                        ->execute();
     }
 
     /**

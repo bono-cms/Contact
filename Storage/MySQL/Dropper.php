@@ -22,8 +22,7 @@ final class Dropper extends AbstractStorageDropper
     {
         return array(
             ContactMapper::getTableName(),
-            ContactTranslationMapper::getTableName(),
-            DefaultMapper::getTableName()
+            ContactTranslationMapper::getTableName()
         );
     }
 }
