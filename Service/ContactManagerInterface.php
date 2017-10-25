@@ -36,14 +36,6 @@ interface ContactManagerInterface
     public function getPaginator();
 
     /**
-     * Marks contact id as a default one
-     * 
-     * @param string $id Contact id
-     * @return boolean
-     */
-    public function makeDefault($id);
-
-    /**
      * Fetches all contacts optionally filtered by pagination
      * 
      * @param integer $page Current page

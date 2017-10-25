@@ -67,6 +67,11 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
      */
     public function updateSettings($settings)
     {
+        if (isset($settings['default'])) {
+            $this->contactMapper->updateDefault((int) $settings['default']);
+        }
+
+        unset($settings['default']);
         return $this->contactMapper->updateSettings($settings);
     }
 
@@ -88,17 +93,6 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     public function getPaginator()
     {
         return $this->contactMapper->getPaginator();
-    }
-
-    /**
-     * Marks contact id as a default one
-     * 
-     * @param string $id Contact id
-     * @return boolean
-     */
-    public function makeDefault($id)
-    {
-        return $this->contactMapper->updateDefault((int) $id);
     }
 
     /**

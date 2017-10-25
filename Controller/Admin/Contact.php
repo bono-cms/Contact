@@ -52,10 +52,6 @@ final class Contact extends AbstractController
         $contactManager = $this->getModuleService('contactManager');
         $contactManager->updateSettings($this->request->getPost());
 
-        if ($this->request->hasPost('default')) {
-            $contactManager->makeDefault($this->request->getPost('default'));
-        }
-
         $this->flashBag->set('success', 'Configuration has been updated successfully');
         return '1';
     }
