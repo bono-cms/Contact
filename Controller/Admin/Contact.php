@@ -157,7 +157,7 @@ final class Contact extends AbstractController
             $service = $this->getModuleService('contactManager');
 
             // Update
-            if (!empty($input['id'])) {
+            if (!empty($input['contact']['id'])) {
                 if ($service->update($input)) {
                     $this->flashBag->set('success', 'The element has been updated successfully');
                     return '1';
