@@ -64,10 +64,6 @@ final class Contact extends AbstractController
      */
     private function createForm($contact, $title)
     {
-        // Load view plugins
-        $this->view->getPluginBag()
-                   ->appendScript('@Contact/admin/contact.form.js');
-
         // Append breadcrumbs
         $this->view->getBreadcrumbBag()->addOne('Contacts', 'Contact:Admin:Contact@gridAction')
                                        ->addOne($title);
