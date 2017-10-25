@@ -38,9 +38,9 @@ interface ContactMapperInterface
     public function fetchNameById($id);
 
     /**
-     * Fetches block data by its associated id
+     * Fetches contact data by its associated id
      * 
-     * @param string $id Block id
+     * @param string $id Contact ID
      * @param boolean $withTranslations Whether to fetch translations or not
      * @return array
      */
