@@ -69,8 +69,7 @@ final class Contact extends AbstractController
                                        ->addOne($title);
 
         return $this->view->render('contact.form', array(
-            'contact' => $contact,
-            'new' => !is_array($contact)
+            'contact' => $contact
         ));
     }
 
