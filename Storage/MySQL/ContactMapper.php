@@ -41,15 +41,15 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
     private function getColumns()
     {
         return array(
-            self::getFullColumnName('id'),
-            self::getFullColumnName('order'),
-            self::getFullColumnName('published'),
-            self::getFullColumnName('default'),
-            ContactTranslationMapper::getFullColumnName('lang_id'),
-            ContactTranslationMapper::getFullColumnName('name'),
-            ContactTranslationMapper::getFullColumnName('phone'),
-            ContactTranslationMapper::getFullColumnName('email'),
-            ContactTranslationMapper::getFullColumnName('description')
+            self::column('id'),
+            self::column('order'),
+            self::column('published'),
+            self::column('default'),
+            ContactTranslationMapper::column('lang_id'),
+            ContactTranslationMapper::column('name'),
+            ContactTranslationMapper::column('phone'),
+            ContactTranslationMapper::column('email'),
+            ContactTranslationMapper::column('description')
         );
     }
 
@@ -116,12 +116,12 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
     {
         $db = $this->createEntitySelect($this->getColumns())
                    // Language ID constraint
-                   ->whereEquals(ContactTranslationMapper::getFullColumnName('lang_id'), $this->getLangId());
+                   ->whereEquals(ContactTranslationMapper::column('lang_id'), $this->getLangId());
 
         if ($published === true) {
             $db->orderBy(new RawSqlFragment('`order`, CASE WHEN `order` = 0 THEN `id` END DESC'));
         } else {
-            $db->orderBy(self::getFullColumnName('id'))
+            $db->orderBy(self::column('id'))
                ->desc();
         }
 
