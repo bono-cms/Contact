@@ -1,6 +1,9 @@
 <?php
 
 use Krystal\Form\Element;
+use Krystal\Grid\Grid;
+use Cms\View\Icon;
+
 defined('KRYSTAL') or die;
 
 ?>
@@ -29,51 +32,59 @@ defined('KRYSTAL') or die;
 
 <form>
 	<div class="table-responsive">
-		<table class="table table-hover table-bordered table-striped">
-			<thead>
-				<tr>
-					<th class="text-center">
-                        <?php if (!empty($contacts)): ?>
-						<input type="checkbox" />
-                        <?php endif; ?>
-					</th>
-					<th class="text-center"><?php $this->show('#'); ?></th>
-					<th class="text-center"><?php $this->show('Name'); ?></th>
-					<th class="text-center"><?php $this->show('Order'); ?></th>
-					<th class="text-center"><?php $this->show('Published'); ?></th>
-					<th class="text-center"><?php $this->show('Default'); ?></th>
-					<th class="text-center"><?php $this->show('Actions'); ?></th>
-				</tr>
-			</thead>
-			
-			<?php if (!empty($contacts)): ?>
-			<tbody>
-				<?php foreach ($contacts as $contact): ?>
-				<tr>
-					<td class="text-center">
-						<input type="checkbox" name="toDelete[<?php echo $contact->getId(); ?>]" />
-					</td>
-					<td class="text-center text-muted"><?php echo $contact->getId(); ?></td>
-					<td class="text-center"><?php echo $contact->getName(); ?></td>
-					<td class="text-center col-md-2">
-                        <?php echo Element::number(sprintf('order[%s]', $contact->getId()), $contact->getOrder(), array('class' => 'form-control', 'min' => '0')); ?>
-					</td>
-					<td class="text-center">
-                        <?php echo Element::checkbox(sprintf('published[%s]', $contact->getId()), $contact->getPublished()); ?>
-					</td>
-					<td class="text-center">
-                        <?php echo Element::radio('default', $contact->getId(), $contact->getDefault()); ?>
-					</td>
-					<td class="text-center">
-						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Edit this contact'); ?>" data-button="edit" href="<?php echo $this->url('Contact:Admin:Contact@editAction', $contact->getId()); ?>"><i class="glyphicon glyphicon-pencil"></i></a>
-						<a data-toggle="tooltip" data-placement="left" data-original-title="<?php $this->show('Remove this contact'); ?>" data-button="delete" href="#" data-url="<?php echo $this->url('Contact:Admin:Contact@deleteAction', $contact->getId()); ?>"><i class="glyphicon glyphicon-remove"></i></a>
-					</td>
-				</tr>
-				<?php endforeach; ?>
-				
-			</tbody>
-			<?php endif; ?>
-		</table>
+        <?= Grid::render($contacts, array(
+            'batch' => true,
+            'pk' => 'id',
+            'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
+            'columns' => array(
+                array(
+                    'column' => 'id',
+                    'label' => '#'
+                ),
+
+                array(
+                    'column' => 'name'
+                ),
+
+                array(
+                    'column' => 'order',
+                    'value' => function($contact){
+                        return Element::number(sprintf('order[%s]', $contact->getId()), $contact->getOrder(), array('class' => 'form-control', 'min' => '0'));
+                    }
+                ),
+
+                array(
+                    'column' => 'published',
+                    'value' => function($contact){
+                        return Element::checkbox(sprintf('published[%s]', $contact->getId()), $contact->getPublished());
+                    }
+                ),
+
+                array(
+                    'column' => 'default',
+                    'value' => function($contact){
+                        return Element::radio('default', $contact->getId(), $contact->getDefault());
+                    }
+                )
+            ),
+
+            'actions' => array(
+                'edit' => function($contact){
+                    return Icon::edit(
+                        $this->url('Contact:Admin:Contact@editAction', $contact->getId()),
+                        $this->translate('Edit this contact')
+                    );
+                },
+
+                'remove' => function($contact){
+                    return Icon::remove(
+                        $this->url('Contact:Admin:Contact@deleteAction', $contact->getId()),
+                        $this->translate('Remove this contact')
+                    );
+                }
+            )
+
+        ), $this->translator); ?>        
 		
 		<?php if (empty($contacts)): ?>
 		<div class="center-block">
