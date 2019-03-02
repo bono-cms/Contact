@@ -1,7 +1,7 @@
 <?php
 
 use Krystal\Form\Element;
-use Krystal\Grid\Grid;
+use Krystal\Widget\GridWidget;
 use Cms\View\Icon;
 
 defined('KRYSTAL') or die;
@@ -32,7 +32,7 @@ defined('KRYSTAL') or die;
 
 <form>
 	<div class="table-responsive">
-        <?= Grid::render($contacts, array(
+        <?= $this->widget(new GridWidget($contacts, array(
             'batch' => true,
             'pk' => 'id',
             'tableClass' => 'table table-hover table-bordered table-striped table-condensed',
@@ -84,14 +84,14 @@ defined('KRYSTAL') or die;
                 }
             )
 
-        ), $this->translator); ?>
+        ))); ?>
 		
 		<?php if (empty($contacts)): ?>
 		<div class="center-block">
 			<h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No contacts'); ?></h2>
 		</div>
 		<?php endif; ?>
-		
+
 	</div>
 </form>
 
