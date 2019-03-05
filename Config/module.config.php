@@ -1,9 +1,24 @@
 <?php
 
+/**
+ * Module configuration container
+ */
+
 return array(
- 'name'  => 'Contact',
- 'caption'  => 'Contact',
- 'route' => 'Contact:Admin:Contact@gridAction',
- 'order' => 1,
- 'description' => 'Contact module allows you to manage contact information on your site'
+    'caption'  => 'Contact',
+    'description' => 'Contact module allows you to manage contact information on your site',
+    'menu' => array(
+        'name'  => 'Contact',
+        'icon' => '',
+        'items' => array(
+            array(
+                'route' => 'Contact:Admin:Contact@gridAction',
+                'name' => 'View all contacts'
+            ),
+            array(
+                'route' => 'Contact:Admin:Contact@addAction',
+                'name' => 'Add new contact'
+            )
+        )
+    )
 );
