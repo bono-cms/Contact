@@ -9,7 +9,7 @@ return array(
     'description' => 'Contact module allows you to manage contact information on your site',
     'menu' => array(
         'name'  => 'Contact',
-        'icon' => '',
+        'icon' => 'fas fa-phone-square',
         'items' => array(
             array(
                 'route' => 'Contact:Admin:Contact@gridAction',
