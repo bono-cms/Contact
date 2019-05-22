@@ -1,7 +1,6 @@
 <?php
 
 use Krystal\Form\Element;
-use Krystal\Widget\GridView\GridViewWidget;
 use Cms\View\Icon;
 
 defined('KRYSTAL') or die;
@@ -9,93 +8,72 @@ defined('KRYSTAL') or die;
 ?>
 
 <div class="btn-toolbar">
-    <div class="dropdown">
-      <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-        <i class="glyphicon glyphicon-list"></i> <?php $this->show('Menu'); ?> <span class="caret"></span>
-      </button>
+    <?php $this->loadPartial('menu', array(
+        'items' => array(
+            'Contact:Admin:Contact@addAction' => 'Add new contact'
+        ),
 
-      <div class="dropdown-menu">
-         <a class="dropdown-item" href="<?php echo $this->url('Contact:Admin:Contact@addAction'); ?>"><i class="glyphicon glyphicon-phone-alt"></i> <?php $this->show('Add new contact'); ?></a>
-         <div class="dropdown-divider"></div>
-         <div class="dropdown-header"><?php $this->show('Actions'); ?></div>
-         <?php if (!empty($contacts)): ?>
-         <a class="dropdown-item" href="#" data-button="save-changes" data-url="<?php echo $this->url('Contact:Admin:Contact@tweakAction'); ?>"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
-         <a class="dropdown-item" href="#" data-button="remove-selected" data-url="<?php echo $this->url('Contact:Admin:Contact@deleteAction', null); ?>"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a>
-         <?php else: ?>
-         <a class="dropdown-item"><i class="glyphicon glyphicon-floppy-save"></i> <?php $this->show('Save changes'); ?></a>
-         <a class="dropdown-item"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('Remove selected'); ?></a>
-         <?php endif; ?>
-      </div>
-    </div>
+        'actions' => array(
+            'data' => $contacts,
+            'save' => 'Contact:Admin:Contact@tweakAction',
+            'delete' => 'Contact:Admin:Contact@deleteAction'
+        )
+    )); ?>
 </div>
 
 <div class="card">
-    <?php $this->loadPartial('items-per-page', array('caption' => 'Contacts')); ?>
+    <?php $this->loadPartial('table', array(
+        'caption' => 'Contacts',
+        'rows' => $contacts,
+        'batch' => true,
+        'columns' => array(
+            array(
+                'column' => 'id',
+                'label' => '#'
+            ),
 
-    <form>
-        <div class="table-responsive">
-            <?= $this->widget(new GridViewWidget($contacts, array(
-                'batch' => true,
-                'pk' => 'id',
-                'tableClass' => 'table table-hover table-bordered table-striped table-sm',
-                'columns' => array(
-                    array(
-                        'column' => 'id',
-                        'label' => '#'
-                    ),
+            array(
+                'column' => 'name'
+            ),
 
-                    array(
-                        'column' => 'name'
-                    ),
+            array(
+                'column' => 'order',
+                'value' => function($contact){
+                    return Element::number(sprintf('order[%s]', $contact->getId()), $contact->getOrder(), array('class' => 'form-control', 'min' => '0'));
+                }
+            ),
 
-                    array(
-                        'column' => 'order',
-                        'value' => function($contact){
-                            return Element::number(sprintf('order[%s]', $contact->getId()), $contact->getOrder(), array('class' => 'form-control', 'min' => '0'));
-                        }
-                    ),
+            array(
+                'column' => 'published',
+                'value' => function($contact){
+                    return Element::checkbox(sprintf('published[%s]', $contact->getId()), $contact->getPublished());
+                }
+            ),
 
-                    array(
-                        'column' => 'published',
-                        'value' => function($contact){
-                            return Element::checkbox(sprintf('published[%s]', $contact->getId()), $contact->getPublished());
-                        }
-                    ),
+            array(
+                'column' => 'default',
+                'value' => function($contact){
+                    return Element::radio('default', $contact->getId(), $contact->getDefault());
+                }
+            )            
+        ),
 
-                    array(
-                        'column' => 'default',
-                        'value' => function($contact){
-                            return Element::radio('default', $contact->getId(), $contact->getDefault());
-                        }
-                    )
-                ),
+        'actions' => array(
+            'edit' => function($contact){
+                return Icon::edit(
+                    $this->url('Contact:Admin:Contact@editAction', $contact->getId()),
+                    $this->translate('Edit this contact')
+                );
+            },
 
-                'actions' => array(
-                    'edit' => function($contact){
-                        return Icon::edit(
-                            $this->url('Contact:Admin:Contact@editAction', $contact->getId()),
-                            $this->translate('Edit this contact')
-                        );
-                    },
+            'remove' => function($contact){
+                return Icon::remove(
+                    $this->url('Contact:Admin:Contact@deleteAction', $contact->getId()),
+                    $this->translate('Remove this contact')
+                );
+            }
+        )
 
-                    'remove' => function($contact){
-                        return Icon::remove(
-                            $this->url('Contact:Admin:Contact@deleteAction', $contact->getId()),
-                            $this->translate('Remove this contact')
-                        );
-                    }
-                )
+    )); ?>
 
-            ))); ?>
-            
-            <?php if (empty($contacts)): ?>
-            <div class="center-block">
-                <h2 class="text-center text-muted"><i class="glyphicon glyphicon-remove"></i> <?php $this->show('No contacts'); ?></h2>
-            </div>
-            <?php endif; ?>
-
-        </div>
-    </form>
-
-    <?php $this->loadPartial('paginator'); ?>
 </div>
