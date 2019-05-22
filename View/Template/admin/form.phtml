@@ -1,0 +1,110 @@
+<?php
+
+use Krystal\Form\Element;
+use Cms\Service\LanguageManager;
+
+defined('KRYSTAL') or die;
+
+?>
+
+<form class="card" data-group="contact" autocomplete="off">
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" class="nav-item active"><a class="nav-link" href="#advice" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-file"></i> <?php $this->show('Contact'); ?></a></li>
+        <li role="presentation" class="nav-item"><a class="nav-link" href="#configuration" role="tab" data-toggle="tab"><i class="glyphicon glyphicon-th-list"></i> <?php $this->show('Configuration'); ?></a></li>
+	</ul>
+
+    <div class="tab-content">
+        <div class="tab-pane fade in active" id="advice" role="tabpanel">
+            <?php $this->loadPartial('language-tabs'); ?>
+
+            <div class="tab-content">
+                <?php foreach ($languages as $index => $language): ?>
+                <div class="tab-pane fade in <?php echo $index == 0 ? 'active show' : null; ?>" id="<?php printf('language-%s', $language->getId()); ?>" role="tabpanel">
+                    <?php $entity = LanguageManager::findByLangId($language->getId(), $contact); ?>
+
+                    <?php echo Element::hidden(sprintf('translation[%s][id]', $language->getId()), $entity->getId()); ?>
+                    <?php echo Element::hidden(sprintf('translation[%s][lang_id]', $language->getId()), $language->getId()); ?>
+
+                    <?php $this->loadPartial('language-name', array('language' => $language)); ?>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"><?php $this->show('Name'); ?></label>
+                        <div class="col-lg-10">
+                            <div class="input-group">
+                                <?php echo Element::text(sprintf('translation[%s][name]', $language->getId()), $entity->getName(), array('class' => 'form-control', 'placeholder' => $this->translate('Name'))); ?>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"><?php $this->show('Email'); ?></label>
+                        <div class="col-lg-10">
+                            <div class="input-group">
+                                <?php echo Element::text(sprintf('translation[%s][email]', $language->getId()), $entity->getEmail(), array('class' => 'form-control', 'placeholder' => $this->translate('Email'))); ?>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"><?php $this->show('Phone'); ?></label>
+                        <div class="col-lg-10">
+                            <div class="input-group">
+                                <?php echo Element::text(sprintf('translation[%s][phone]', $language->getId()), $entity->getPhone(), array('class' => 'form-control', 'placeholder' => $this->translate('Phone'))); ?>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label"><?php $this->show('Description'); ?></label>
+                        <div class="col-lg-10">
+                            <div class="input-group">
+                                <?php echo Element::textarea(sprintf('translation[%s][description]', $language->getId()), $entity->getDescription(), array('class' => 'form-control', 'placeholder' => $this->translate('Description'))); ?>
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-pencil"></i></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <?php endforeach; ?>
+            </div>
+        </div>
+
+        <div class="tab-pane fade" id="configuration" role="tabpanel">
+            <?php echo Element::hidden('contact[id]', $entity->getId()); ?>
+            
+            <?php if (!$entity->getId()): ?>
+            <div class="form-group">
+                <label class="col-lg-2 control-label"><?php $this->show('Make default'); ?></label>
+                <div class="col-lg-10">
+                    <?php echo Element::checkbox('contact[makeDefault]', $entity->getDefault(), array('class' => 'form-control')); ?>
+                </div>
+            </div>
+            <?php endif; ?>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label"><?php $this->show('Published'); ?></label>
+                <div class="col-lg-10">
+                    <?php echo Element::checkbox('contact[published]', $entity->getPublished(), array('class' => 'form-control')); ?>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-2 control-label"><?php $this->show('Order'); ?></label>
+                <div class="col-lg-10">
+                    <?php echo Element::number('contact[order]', $entity->getOrder(), array('class' => 'form-control', 'min' => '0', 'placeholder' => $this->translate('Sort order'))); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <?php $this->loadPartial('actions', array(
+        'new' => !$entity->getId(),
+        'add' => 'Contact:Admin:Contact@addAction',
+        'edit' => 'Contact:Admin:Contact@editAction',
+        'save' => 'Contact:Admin:Contact@saveAction',
+        'cancel' => 'Contact:Admin:Contact@gridAction'
+    )); ?>
+
+</form>

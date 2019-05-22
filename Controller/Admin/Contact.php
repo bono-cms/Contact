@@ -68,7 +68,7 @@ final class Contact extends AbstractController
         $this->view->getBreadcrumbBag()->addOne('Contacts', 'Contact:Admin:Contact@indexAction')
                                        ->addOne($title);
 
-        return $this->view->render('contact.form', array(
+        return $this->view->render('form', array(
             'contact' => $contact
         ));
     }
