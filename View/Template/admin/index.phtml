@@ -1,0 +1,79 @@
+<?php
+
+use Krystal\Form\Element;
+use Cms\View\Icon;
+
+defined('KRYSTAL') or die;
+
+?>
+
+<div class="btn-toolbar">
+    <?php $this->loadPartial('menu', array(
+        'items' => array(
+            'Contact:Admin:Contact@addAction' => 'Add new contact'
+        ),
+
+        'actions' => array(
+            'data' => $contacts,
+            'save' => 'Contact:Admin:Contact@tweakAction',
+            'delete' => 'Contact:Admin:Contact@deleteAction'
+        )
+    )); ?>
+</div>
+
+<div class="card">
+    <?php $this->loadPartial('table', array(
+        'caption' => 'Contacts',
+        'rows' => $contacts,
+        'batch' => true,
+        'columns' => array(
+            array(
+                'column' => 'id',
+                'label' => '#'
+            ),
+
+            array(
+                'column' => 'name'
+            ),
+
+            array(
+                'column' => 'order',
+                'value' => function($contact){
+                    return Element::number(sprintf('order[%s]', $contact->getId()), $contact->getOrder(), array('class' => 'form-control', 'min' => '0'));
+                }
+            ),
+
+            array(
+                'column' => 'published',
+                'value' => function($contact){
+                    return Element::checkbox(sprintf('published[%s]', $contact->getId()), $contact->getPublished());
+                }
+            ),
+
+            array(
+                'column' => 'default',
+                'value' => function($contact){
+                    return Element::radio('default', $contact->getId(), $contact->getDefault());
+                }
+            )            
+        ),
+
+        'actions' => array(
+            'edit' => function($contact){
+                return Icon::edit(
+                    $this->url('Contact:Admin:Contact@editAction', $contact->getId()),
+                    $this->translate('Edit this contact')
+                );
+            },
+
+            'remove' => function($contact){
+                return Icon::remove(
+                    $this->url('Contact:Admin:Contact@deleteAction', $contact->getId()),
+                    $this->translate('Remove this contact')
+                );
+            }
+        )
+
+    )); ?>
+
+</div>

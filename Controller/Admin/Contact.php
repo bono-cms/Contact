@@ -35,7 +35,7 @@ final class Contact extends AbstractController
         $paginator = $contactManager->getPaginator();
         $paginator->setUrl($this->createUrl('Contact:Admin:Contact@gridAction', array(), 1));
 
-        return $this->view->render('browser', array(
+        return $this->view->render('index', array(
             'contacts' => $contacts,
             'paginator' => $paginator
         ));
