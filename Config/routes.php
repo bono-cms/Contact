@@ -21,11 +21,11 @@ return array(
     ),
 
     '/%s/module/contact' => array(
-        'controller' => 'Admin:Contact@gridAction'
+        'controller' => 'Admin:Contact@indexAction'
     ),
 
     '/%s/module/contact/page/(:var)' => array(
-        'controller'    => 'Admin:Contact@gridAction'
+        'controller'    => 'Admin:Contact@indexAction'
     ),
 
     '/%s/module/contact/add' => array(

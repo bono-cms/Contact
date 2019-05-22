@@ -23,7 +23,7 @@ final class Contact extends AbstractController
      * @param integer $page Current page
      * @return string
      */
-    public function gridAction($page = 1)
+    public function indexAction($page = 1)
     {
         // Append a breadcrumb
         $this->view->getBreadcrumbBag()
@@ -33,7 +33,7 @@ final class Contact extends AbstractController
         $contacts = $contactManager->fetchAll(false, $page, $this->getSharedPerPageCount());
 
         $paginator = $contactManager->getPaginator();
-        $paginator->setUrl($this->createUrl('Contact:Admin:Contact@gridAction', array(), 1));
+        $paginator->setUrl($this->createUrl('Contact:Admin:Contact@indexAction', array(), 1));
 
         return $this->view->render('index', array(
             'contacts' => $contacts,
@@ -65,7 +65,7 @@ final class Contact extends AbstractController
     private function createForm($contact, $title)
     {
         // Append breadcrumbs
-        $this->view->getBreadcrumbBag()->addOne('Contacts', 'Contact:Admin:Contact@gridAction')
+        $this->view->getBreadcrumbBag()->addOne('Contacts', 'Contact:Admin:Contact@indexAction')
                                        ->addOne($title);
 
         return $this->view->render('contact.form', array(
