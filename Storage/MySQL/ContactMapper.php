@@ -119,7 +119,8 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
                    ->whereEquals(ContactTranslationMapper::column('lang_id'), $this->getLangId());
 
         if ($published === true) {
-            $db->orderBy(new RawSqlFragment(sprintf('%s, CASE WHEN %s = 0 THEN %s END DESC', self::column('order'), self::column('order'), ContactTranslationMapper::column('id'))));
+            $db->andWhereEquals(self::column('published'), 1)
+               ->orderBy(new RawSqlFragment(sprintf('%s, CASE WHEN %s = 0 THEN %s END DESC', self::column('order'), self::column('order'), ContactTranslationMapper::column('id'))));
         } else {
             $db->orderBy(self::column('id'))
                ->desc();
