@@ -95,9 +95,10 @@ final class Contact extends AbstractController
     public function editAction($id)
     {
         $contact = $this->getModuleService('contactManager')->fetchById($id, true);
-        
+
         if ($contact !== false) {
-            return $this->createForm($contact, 'Edit the contact');
+            $name = $this->getCurrentProperty($contact, 'name');
+            return $this->createForm($contact, $this->translator->translate('Edit the contact "%s"', $name));
         } else {
             return false;
         }
