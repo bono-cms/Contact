@@ -5,8 +5,7 @@ CREATE TABLE `bono_module_contact` (
     `order` INT NOT NULL COMMENT 'Sort order',
     `published` varchar(1) NOT NULL COMMENT 'Whether this contact is published or not',
     `default` varchar(1) NOT NULL COMMENT 'Whether this contact is considered default'
-
-) DEFAULT CHARSET = UTF8;
+) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
 
 DROP TABLE IF EXISTS `bono_module_contact_translations`;
 CREATE TABLE `bono_module_contact_translations` (
@@ -17,5 +16,5 @@ CREATE TABLE `bono_module_contact_translations` (
 	`email` varchar(254) NOT NULL,
 	`description` TEXT NOT NULL,
 
-    FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE,
-) DEFAULT CHARSET = UTF8;
+    FOREIGN KEY (lang_id) REFERENCES bono_module_cms_languages(id) ON DELETE CASCADE
+) ENGINE = InnoDB DEFAULT CHARSET = UTF8;
