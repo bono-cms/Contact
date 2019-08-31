@@ -169,23 +169,22 @@ final class Contact extends AbstractController
             // Current page name
             $name = $this->getCurrentProperty($this->request->getPost('translation'), 'name');
 
+            // Save in the history
+            $service->save($input);
+
             // Update
             if (!empty($input['contact']['id'])) {
-                if ($service->update($input)) {
-                    $this->flashBag->set('success', 'The element has been updated successfully');
+                $this->flashBag->set('success', 'The element has been updated successfully');
 
-                    $historyService->write('Contact', 'Contact "%s" has been updated', $name);
-                    return '1';
-                }
+                $historyService->write('Contact', 'Contact "%s" has been updated', $name);
+                return '1';
 
             } else {
                 // Create
-                if ($service->add($input)) {
-                    $this->flashBag->set('success', 'The element has been created successfully');
+                $this->flashBag->set('success', 'The element has been created successfully');
 
-                    $historyService->write('Contact', 'Contact "%s" has been added', $name);
-                    return $service->getLastId();
-                }
+                $historyService->write('Contact', 'Contact "%s" has been added', $name);
+                return $service->getLastId();
             }
 
         } else {

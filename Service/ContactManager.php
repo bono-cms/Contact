@@ -18,7 +18,7 @@ use Krystal\Stdlib\VirtualEntity;
 use Krystal\Stdlib\ArrayUtils;
 use Krystal\Security\Filter;
 
-final class ContactManager extends AbstractManager implements ContactManagerInterface
+final class ContactManager extends AbstractManager
 {
     /**
      * Any compliant contact mapper
@@ -74,6 +74,20 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     }
 
     /**
+     * Saves a contact
+     * 
+     * @param array $input Raw input data
+     * @return boolean
+     */
+    public function save(array $input)
+    {
+        $input['contact']['order'] = (int) $input['contact']['order'];
+        $input['contact'] = ArrayUtils::arrayWithout($input['contact'], array('makeDefault'));
+
+        return $this->contactMapper->saveEntity($input['contact'], $input['translation']);
+    }
+
+    /**
      * Returns last contact's id
      * 
      * @return integer
@@ -123,48 +137,13 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     }
 
     /**
-     * Adds a contact
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function add(array $input)
-    {
-        //$input['order'] = (int) $input['order'];
-        return $this->contactMapper->saveEntity(ArrayUtils::arrayWithout($input['contact'], array('makeDefault')), $input['translation']);
-    }
-
-    /**
-     * Updates a contact
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function update(array $input)
-    {
-        //$input['order'] = (int) $input['order'];
-        return $this->contactMapper->saveEntity($input['contact'], $input['translation']);
-    }
-
-    /**
      * Deletes a contact by its associated id
      * 
-     * @param string $id Contact's id
+     * @param string|array $id Contact's id
      * @return boolean
      */
-    public function deleteById($id)
+    public function delete($id)
     {
         return $this->contactMapper->deleteEntity($id);
-    }
-
-    /**
-     * Deletes contacts by their associated ids
-     * 
-     * @param array $ids Array of contact ids
-     * @return boolean
-     */
-    public function deleteByIds(array $ids)
-    {
-        return $this->contactMapper->deleteEntity($ids);
     }
 }

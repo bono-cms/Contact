@@ -11,22 +11,22 @@
 
 namespace Contact\Service;
 
-final class SiteService implements SiteServiceInterface
+final class SiteService
 {
     /**
      * Contact manager service
      * 
-     * @var \Contact\Service\ContactManagerInterface
+     * @var \Contact\Service\ContactManager
      */
     private $contactManager;
 
     /**
      * State initialization
      * 
-     * @param \Contact\Service\ContactManagerInterface $contactManager
+     * @param \Contact\Service\ContactManager $contactManager
      * @return void
      */
-    public function __construct(ContactManagerInterface $contactManager)
+    public function __construct(ContactManager $contactManager)
     {
         $this->contactManager = $contactManager;
     }
