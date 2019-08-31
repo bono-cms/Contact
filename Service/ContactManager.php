@@ -28,35 +28,33 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     private $contactMapper;
 
     /**
-     * History manager to keep tracks
-     * 
-     * @var \Cms\Service\HistoryManagerInterface
-     */
-    private $historyManager;
-
-    /**
      * State initialization
      * 
      * @param \Contact\Storage\ContactMapperInterface $contactMapper
-     * @param \Cms\Service\HistoryManagerInterface $historyManager
      * @return void
      */
-    public function __construct(ContactMapperInterface $contactMapper, HistoryManagerInterface $historyManager)
+    public function __construct(ContactMapperInterface $contactMapper)
     {
         $this->contactMapper = $contactMapper;
-        $this->historyManager = $historyManager;
     }
 
     /**
-     * Tracks activity
-     * 
-     * @param string $message
-     * @param string $placeholder
-     * @return boolean
+     * {@inheritDoc} 
      */
-    private function track($message, $placeholder)
+    protected function toEntity(array $contact)
     {
-        return $this->historyManager->write('Contact', $message, $placeholder);
+        $entity = new VirtualEntity();
+        $entity->setId($contact['id'], VirtualEntity::FILTER_INT)
+               ->setLangId($contact['lang_id'], VirtualEntity::FILTER_INT)
+               ->setName($contact['name'], VirtualEntity::FILTER_HTML)
+               ->setPhone($contact['phone'], VirtualEntity::FILTER_HTML)
+               ->setEmail($contact['email'], VirtualEntity::FILTER_HTML)
+               ->setDescription($contact['description'], VirtualEntity::FILTER_HTML)
+               ->setOrder($contact['order'], VirtualEntity::FILTER_INT)
+               ->setDefault($contact['default'], VirtualEntity::FILTER_BOOL)
+               ->setPublished($contact['published'], VirtualEntity::FILTER_BOOL);
+
+        return $entity;
     }
 
     /**
@@ -96,25 +94,6 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     }
 
     /**
-     * {@inheritDoc} 
-     */
-    protected function toEntity(array $contact)
-    {
-        $entity = new VirtualEntity();
-        $entity->setId($contact['id'], VirtualEntity::FILTER_INT)
-               ->setLangId($contact['lang_id'], VirtualEntity::FILTER_INT)
-               ->setName($contact['name'], VirtualEntity::FILTER_HTML)
-               ->setPhone($contact['phone'], VirtualEntity::FILTER_HTML)
-               ->setEmail($contact['email'], VirtualEntity::FILTER_HTML)
-               ->setDescription($contact['description'], VirtualEntity::FILTER_HTML)
-               ->setOrder($contact['order'], VirtualEntity::FILTER_INT)
-               ->setDefault($contact['default'], VirtualEntity::FILTER_BOOL)
-               ->setPublished($contact['published'], VirtualEntity::FILTER_BOOL);
-
-        return $entity;
-    }
-
-    /**
      * Fetches all contacts optionally filtered by pagination
      * 
      * @param integer $page Current page
@@ -125,66 +104,6 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
     public function fetchAll($published, $page, $itemsPerPage)
     {
         return $this->prepareResults($this->contactMapper->fetchAll($published, $page, $itemsPerPage));
-    }
-
-    /**
-     * Adds a contact
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function add(array $input)
-    {
-        //$input['order'] = (int) $input['order'];
-        //$this->track('Contact "%s" has been added', $input['name']);
-
-        return $this->contactMapper->saveEntity(ArrayUtils::arrayWithout($input['contact'], array('makeDefault')), $input['translation']);
-    }
-
-    /**
-     * Updates a contact
-     * 
-     * @param array $input Raw input data
-     * @return boolean
-     */
-    public function update(array $input)
-    {
-        //$input['order'] = (int) $input['order'];
-
-        //$this->track('Contact "%s" has been updated', $input['name']);
-        return $this->contactMapper->saveEntity($input['contact'], $input['translation']);
-    }
-
-    /**
-     * Deletes a contact by its associated id
-     * 
-     * @param string $id Contact's id
-     * @return boolean
-     */
-    public function deleteById($id)
-    {
-        //$name = Filter::escape($this->contactMapper->fetchNameById($id));
-
-        if ($this->contactMapper->deleteEntity($id)) {
-            //$this->track('Contact "%s" has been removed', $name);
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * Deletes contacts by their associated ids
-     * 
-     * @param array $ids Array of contact ids
-     * @return boolean
-     */
-    public function deleteByIds(array $ids)
-    {
-        $this->contactMapper->deleteEntity($ids);
-
-        $this->track('Batch removal of %s contacts', count($ids));
-        return true;
     }
 
     /**
@@ -201,5 +120,51 @@ final class ContactManager extends AbstractManager implements ContactManagerInte
         } else {
             return $this->prepareResult($this->contactMapper->fetchById($id, false));
         }
+    }
+
+    /**
+     * Adds a contact
+     * 
+     * @param array $input Raw input data
+     * @return boolean
+     */
+    public function add(array $input)
+    {
+        //$input['order'] = (int) $input['order'];
+        return $this->contactMapper->saveEntity(ArrayUtils::arrayWithout($input['contact'], array('makeDefault')), $input['translation']);
+    }
+
+    /**
+     * Updates a contact
+     * 
+     * @param array $input Raw input data
+     * @return boolean
+     */
+    public function update(array $input)
+    {
+        //$input['order'] = (int) $input['order'];
+        return $this->contactMapper->saveEntity($input['contact'], $input['translation']);
+    }
+
+    /**
+     * Deletes a contact by its associated id
+     * 
+     * @param string $id Contact's id
+     * @return boolean
+     */
+    public function deleteById($id)
+    {
+        return $this->contactMapper->deleteEntity($id);
+    }
+
+    /**
+     * Deletes contacts by their associated ids
+     * 
+     * @param array $ids Array of contact ids
+     * @return boolean
+     */
+    public function deleteByIds(array $ids)
+    {
+        return $this->contactMapper->deleteEntity($ids);
     }
 }

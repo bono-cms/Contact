@@ -112,6 +112,7 @@ final class Contact extends AbstractController
      */
     public function deleteAction($id)
     {
+        $historyService = $this->getService('Cms', 'historyManager');
         $service = $this->getModuleService('contactManager');
 
         // Batch removal
@@ -121,14 +122,22 @@ final class Contact extends AbstractController
             $service->deleteByIds($ids);
             $this->flashBag->set('success', 'Selected elements have been removed successfully');
 
+            // Save in the history
+            $historyService->write('Contact', 'Batch removal of %s contacts', count($ids));
+
         } else {
             $this->flashBag->set('warning', 'You should select at least one element to remove');
         }
 
         // Single removal
         if (!empty($id)) {
+            $contact = $this->getModuleService('contactManager')->fetchById($id, false);
+
             $service->deleteById($id);
             $this->flashBag->set('success', 'Selected element has been removed successfully');
+
+            // Save in the history
+            $historyService->write('Contact', 'Contact "%s" has been removed', $contact->getName());
         }
 
         return '1';
@@ -155,11 +164,17 @@ final class Contact extends AbstractController
 
         if (1) {
             $service = $this->getModuleService('contactManager');
+            $historyService = $this->getService('Cms', 'historyManager');
+
+            // Current page name
+            $name = $this->getCurrentProperty($this->request->getPost('translation'), 'name');
 
             // Update
             if (!empty($input['contact']['id'])) {
                 if ($service->update($input)) {
                     $this->flashBag->set('success', 'The element has been updated successfully');
+
+                    $historyService->write('Contact', 'Contact "%s" has been updated', $name);
                     return '1';
                 }
 
@@ -167,6 +182,8 @@ final class Contact extends AbstractController
                 // Create
                 if ($service->add($input)) {
                     $this->flashBag->set('success', 'The element has been created successfully');
+
+                    $historyService->write('Contact', 'Contact "%s" has been added', $name);
                     return $service->getLastId();
                 }
             }
