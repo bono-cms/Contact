@@ -82,17 +82,6 @@ final class ContactMapper extends AbstractMapper implements ContactMapperInterfa
     }
 
     /**
-     * Fetches contact name by its associated id
-     * 
-     * @param string $id Contact id
-     * @return string
-     */
-    public function fetchNameById($id)
-    {
-        return $this->findColumnByPk($id, 'name');
-    }
-
-    /**
      * Fetches contact data by its associated id
      * 
      * @param string $id Contact ID

@@ -30,14 +30,6 @@ interface ContactMapperInterface
     public function updateSettings($settings);
 
     /**
-     * Fetches contact name by its associated id
-     * 
-     * @param string $id Contact id
-     * @return string
-     */
-    public function fetchNameById($id);
-
-    /**
      * Fetches contact data by its associated id
      * 
      * @param string $id Contact ID
