@@ -12,7 +12,7 @@ return array(
         'icon' => 'fas fa-phone-square',
         'items' => array(
             array(
-                'route' => 'Contact:Admin:Contact@gridAction',
+                'route' => 'Contact:Admin:Contact@indexAction',
                 'name' => 'View all contacts'
             ),
             array(
